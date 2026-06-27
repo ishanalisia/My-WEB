@@ -1,0 +1,2935 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ishan Ali — Frontend Developer</title>
+<meta name="description" content="Ishan Ali — Frontend Developer building digital experiences with precision & curiosity. Based in Dhanbad, India.">
+<meta property="og:title" content="Ishan Ali — Frontend Developer">
+<meta property="og:description" content="Building Digital Experiences with Precision & Curiosity">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Ishan Ali">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg: #090909;
+    --card: #121212;
+    --secondary: #1A1A1A;
+    --text: #F5F5F5;
+    --muted: #9CA3AF;
+    --accent: #8B0000;
+    --accent-hover: #A11217;
+    --border: rgba(255,255,255,0.06);
+    --glass: rgba(18,18,18,0.85);
+  }
+
+  .ivory {
+    --bg: #F7F4EF;
+    --card: #EDEAE4;
+    --secondary: #E2DDD7;
+    --text: #1A1A1A;
+    --muted: #6B6860;
+    --accent: #8B0000;
+    --accent-hover: #A11217;
+    --border: rgba(0,0,0,0.08);
+    --glass: rgba(247,244,239,0.9);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html {
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent) var(--bg);
+  }
+
+  ::-webkit-scrollbar { width: 3px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 2px; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
+    cursor: none;
+    overflow-x: hidden;
+    transition: background 0.4s ease, color 0.4s ease;
+  }
+
+  body.loading { overflow: hidden; }
+
+  /* ─── CURSOR ─── */
+  #cursor {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    background: var(--accent);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: width 0.2s, height 0.2s, opacity 0.2s;
+    mix-blend-mode: normal;
+  }
+
+  #cursor-ring {
+    position: fixed;
+    width: 38px;
+    height: 38px;
+    border: 1px solid rgba(139,0,0,0.5);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: transform 0.12s ease, width 0.2s, height 0.2s, border-color 0.2s;
+  }
+
+  body:hover #cursor { opacity: 1; }
+
+  a, button, [role="button"] { cursor: none; }
+
+  /* ─── LOADER ─── */
+  #loader {
+    position: fixed;
+    inset: 0;
+    background: #090909;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    transition: opacity 1s ease, visibility 1s;
+  }
+
+  #loader.hidden { opacity: 0; visibility: hidden; }
+
+  .loader-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.9rem;
+    text-align: center;
+    padding: 2rem;
+  }
+
+  .loader-arabic {
+    font-family: 'Amiri', serif;
+    font-size: clamp(1.6rem, 5vw, 2.8rem);
+    color: #D4AF37;
+    direction: rtl;
+    letter-spacing: 0.02em;
+    opacity: 0;
+    animation: loaderFadeUp 0.8s 0.2s ease forwards;
+    text-shadow: 0 0 30px rgba(212,175,55,0.25);
+  }
+
+  .loader-transliteration {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(0.85rem, 2vw, 1.1rem);
+    color: rgba(245,245,245,0.7);
+    font-style: italic;
+    opacity: 0;
+    animation: loaderFadeUp 0.8s 0.7s ease forwards;
+  }
+
+  .loader-meaning {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(0.72rem, 1.5vw, 0.85rem);
+    color: rgba(156,163,175,0.8);
+    font-style: italic;
+    opacity: 0;
+    animation: loaderFadeUp 0.7s 1.1s ease forwards;
+  }
+
+  .loader-welcome {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(1rem, 2.5vw, 1.4rem);
+    color: #F5F5F5;
+    letter-spacing: 0.05em;
+    margin-top: 0.6rem;
+    opacity: 0;
+    animation: loaderFadeUp 0.7s 1.5s ease forwards;
+  }
+
+  .loader-bar-wrap {
+    width: 100px;
+    height: 1px;
+    background: rgba(255,255,255,0.08);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .loader-bar {
+    position: absolute;
+    top: 0; left: 0;
+    height: 100%;
+    background: linear-gradient(to right, #8B0000, #D4AF37);
+    animation: loadBar 2s ease forwards;
+  }
+
+  @keyframes loadBar { from { width: 0 } to { width: 100% } }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px) } to { opacity: 1; transform: none } }
+  @keyframes loaderFadeUp { from { opacity: 0; transform: translateY(14px) } to { opacity: 1; transform: none } }
+
+  /* ─── SCROLL PROGRESS ─── */
+  #scroll-progress {
+    position: fixed;
+    top: 0; left: 0;
+    height: 2px;
+    background: var(--accent);
+    z-index: 1000;
+    width: 0%;
+    transition: width 0.1s linear;
+  }
+
+  /* ─── MOUSE GLOW ─── */
+  #glow {
+    position: fixed;
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(139,0,0,0.06) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+    transform: translate(-50%, -50%);
+    transition: transform 0.08s linear;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 500;
+    padding: 1.5rem 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: background 0.4s, border-color 0.4s, padding 0.3s;
+    border-bottom: 1px solid transparent;
+  }
+
+  nav.scrolled {
+    background: var(--glass);
+    backdrop-filter: blur(20px);
+    border-bottom-color: var(--border);
+    padding: 1rem 3rem;
+  }
+
+  .nav-logo {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.2rem;
+    letter-spacing: 0.05em;
+    color: var(--text);
+    text-decoration: none;
+    opacity: 0.9;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+    align-items: center;
+  }
+
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    position: relative;
+    transition: color 0.3s;
+  }
+
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px; left: 0;
+    width: 0; height: 1px;
+    background: var(--accent);
+    transition: width 0.3s ease;
+  }
+
+  .nav-links a:hover, .nav-links a.active { color: var(--text); }
+  .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .icon-btn {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    font-size: 0.85rem;
+  }
+
+  .icon-btn:hover { border-color: var(--accent); color: var(--text); }
+
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    padding: 4px;
+  }
+
+  .hamburger span {
+    display: block;
+    width: 22px;
+    height: 1.5px;
+    background: var(--text);
+    transition: all 0.3s;
+  }
+
+  .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+  /* ─── MOBILE MENU ─── */
+  .mobile-menu {
+    position: fixed;
+    inset: 0;
+    background: var(--bg);
+    z-index: 400;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2.5rem;
+    transform: translateX(100%);
+    transition: transform 0.4s cubic-bezier(0.76,0,0.24,1);
+  }
+
+  .mobile-menu.open { transform: none; }
+
+  .mobile-menu a {
+    font-family: 'Instrument Serif', serif;
+    font-size: 2.5rem;
+    color: var(--text);
+    text-decoration: none;
+    opacity: 0.85;
+    transition: opacity 0.2s, color 0.2s;
+  }
+
+  .mobile-menu a:hover { color: var(--accent); opacity: 1; }
+
+  /* ─── SECTIONS ─── */
+  section {
+    position: relative;
+    z-index: 1;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  /* ─── HERO LAYOUT ─── */
+  .hero-layout {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6rem;
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .hero-text {
+    text-align: left;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .hero-photo-wrap {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+  }
+
+  .hero-photo-ring {
+    width: 260px;
+    height: 260px;
+    border-radius: 50%;
+    padding: 3px;
+    background: conic-gradient(from 0deg, var(--accent), transparent 60%, var(--accent));
+    animation: spinRing 8s linear infinite;
+  }
+
+  @keyframes spinRing {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .hero-photo {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    background: var(--card);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .hero-photo-placeholder {
+    width: 254px;
+    height: 254px;
+    border-radius: 50%;
+    background: var(--card);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Instrument Serif', serif;
+    font-size: 3.5rem;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+    user-select: none;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-photo-placeholder::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 30% 30%, rgba(139,0,0,0.12), transparent 70%);
+  }
+
+  .hero-handle {
+    font-size: 0.88rem;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 0;
+    animation: slideUp 0.8s 2.3s ease forwards;
+  }
+
+  .hero-handle-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--accent);
+    display: inline-block;
+  }
+
+  /* ─── SCROLL INDICATOR — centred at bottom of hero, never overlapping ─── */
+  .scroll-indicator {
+    position: absolute;
+    bottom: 2rem;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+    opacity: 0;
+    animation: fadeIn 0.8s 3s ease forwards;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 900px) {
+    .hero-layout {
+      flex-direction: column;
+      gap: 2.5rem;
+      text-align: center;
+    }
+    .hero-text { text-align: center; flex: none; }
+    .hero-photo-wrap { order: -1; }
+    .hero-photo-ring { width: 180px; height: 180px; }
+    .hero-photo-placeholder { width: 174px; height: 174px; font-size: 3rem; }
+    .hero-handle { justify-content: center; }
+    .hero-cta { justify-content: center; }
+    .hero-masha-arabic { font-size: clamp(1.4rem, 6vw, 2rem); }
+    .hero-masha-sub { font-size: 0.6rem; }
+  }
+
+  @media (max-width: 480px) {
+    .hero-photo-ring { width: 150px; height: 150px; }
+    .hero-photo-placeholder { width: 144px; height: 144px; font-size: 2.5rem; }
+    #hero { padding: 6rem 1.5rem 7rem; }
+    .hero-masha-arabic { font-size: 1.4rem; }
+  }
+
+
+  #hero {
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 7rem 2rem 7rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-eyebrow {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: slideUp 0.8s 1.8s ease forwards;
+  }
+
+  .hero-name {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(3rem, 8vw, 7rem);
+    font-weight: 400;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    opacity: 0;
+    animation: slideUp 0.9s 2s ease forwards;
+  }
+
+  .hero-name .accent { color: var(--accent); font-style: italic; }
+
+  .hero-tagline {
+    margin-top: 1.5rem;
+    font-size: clamp(0.88rem, 1.8vw, 1rem);
+    color: var(--muted);
+    font-weight: 300;
+    letter-spacing: 0.03em;
+    max-width: 420px;
+    opacity: 0;
+    animation: slideUp 0.8s 2.2s ease forwards;
+  }
+
+  .hero-cta {
+    margin-top: 2.5rem;
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: slideUp 0.8s 2.4s ease forwards;
+  }
+
+  .btn-primary {
+    padding: 0.9rem 2.5rem;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-primary::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,0.08);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+  }
+
+  .btn-primary:hover::before { transform: scaleX(1); }
+  .btn-primary:hover { background: var(--accent-hover); transform: translateY(-2px); box-shadow: 0 12px 40px rgba(139,0,0,0.3); }
+
+  .btn-ghost {
+    padding: 0.9rem 2.5rem;
+    background: transparent;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .btn-ghost:hover { border-color: var(--accent); color: var(--text); transform: translateY(-2px); }
+
+  .scroll-line {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--accent), transparent);
+    animation: scrollLine 2s ease infinite;
+  }
+
+  @keyframes scrollLine {
+    0% { transform: scaleY(0); transform-origin: top; }
+    50% { transform: scaleY(1); transform-origin: top; }
+    51% { transform: scaleY(1); transform-origin: bottom; }
+    100% { transform: scaleY(0); transform-origin: bottom; }
+  }
+
+  .scroll-text {
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: none; }
+  }
+
+  /* ─── SECTION HEADER ─── */
+  .section-header {
+    margin-bottom: 5rem;
+  }
+
+  .section-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  .section-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    color: var(--text);
+  }
+
+  .section-subtitle {
+    margin-top: 1rem;
+    color: var(--muted);
+    font-size: 0.95rem;
+    max-width: 480px;
+    line-height: 1.8;
+  }
+
+  /* ─── DIVIDER ─── */
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 0;
+  }
+
+  /* ─── PHILOSOPHY ─── */
+  #about {
+    padding: 9rem 0;
+  }
+
+  .philosophy-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-top: 4rem;
+  }
+
+  .philosophy-item {
+    background: var(--bg);
+    padding: 3rem;
+    transition: background 0.3s;
+    position: relative;
+  }
+
+  .philosophy-item:hover { background: var(--card); }
+
+  .philosophy-num {
+    font-size: 0.65rem;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    margin-bottom: 1.2rem;
+    display: block;
+  }
+
+  .philosophy-heading {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.5rem;
+    color: var(--text);
+    margin-bottom: 0.8rem;
+    font-style: italic;
+  }
+
+  .philosophy-body {
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.8;
+  }
+
+  .location-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--muted);
+    font-size: 0.8rem;
+    margin-top: 3rem;
+    border: 1px solid var(--border);
+    padding: 0.5rem 1.2rem;
+    border-radius: 40px;
+  }
+
+  .location-dot {
+    width: 6px;
+    height: 6px;
+    background: #22c55e;
+    border-radius: 50%;
+    animation: pulse 2s ease infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(34,197,94,0.4); }
+    50% { box-shadow: 0 0 0 6px rgba(34,197,94,0); }
+  }
+
+  /* ─── QUOTES ─── */
+  #quotes {
+    padding: 7rem 0;
+    background: var(--card);
+    overflow: hidden;
+  }
+
+  .quote-display {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+
+  .quote-mark {
+    font-family: 'Instrument Serif', serif;
+    font-size: 6rem;
+    color: var(--accent);
+    opacity: 0.3;
+    line-height: 0.5;
+    display: block;
+    margin-bottom: 1.5rem;
+  }
+
+  .quote-text {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(1.4rem, 3vw, 2.2rem);
+    color: var(--text);
+    line-height: 1.4;
+    font-style: italic;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+
+  .quote-text.fade { opacity: 0; transform: translateY(10px); }
+
+  .quote-nav {
+    margin-top: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+  }
+
+  .quote-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--border);
+    border: 1px solid var(--muted);
+    transition: all 0.3s;
+    cursor: none;
+  }
+
+  .quote-dot.active { background: var(--accent); border-color: var(--accent); width: 20px; border-radius: 3px; }
+
+  .quote-btn {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    font-size: 1rem;
+    transition: all 0.2s;
+  }
+
+  .quote-btn:hover { border-color: var(--accent); color: var(--text); }
+
+  /* ─── SKILLS ─── */
+  #skills {
+    padding: 9rem 0;
+  }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-top: 4rem;
+  }
+
+  .skill-card {
+    background: var(--bg);
+    padding: 2.5rem;
+    transition: background 0.3s, transform 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .skill-card::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--accent);
+    transition: width 0.4s ease;
+  }
+
+  .skill-card:hover { background: var(--card); }
+  .skill-card:hover::before { width: 100%; }
+
+  .skill-icon {
+    font-size: 1.5rem;
+    margin-bottom: 1.2rem;
+    display: block;
+  }
+
+  .skill-name {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.2rem;
+    color: var(--text);
+    margin-bottom: 0.6rem;
+  }
+
+  .skill-desc {
+    color: var(--muted);
+    font-size: 0.82rem;
+    line-height: 1.7;
+  }
+
+  .skill-tags {
+    margin-top: 1.2rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .tag {
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    padding: 0.25rem 0.6rem;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    color: var(--muted);
+  }
+
+  /* ─── PROJECTS ─── */
+  #projects {
+    padding: 9rem 0;
+    background: var(--card);
+  }
+
+  .project-filters {
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    margin-bottom: 3rem;
+    margin-top: 3rem;
+  }
+
+  .filter-btn {
+    padding: 0.4rem 1rem;
+    border: 1px solid var(--border);
+    background: none;
+    color: var(--muted);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    border-radius: 2px;
+    transition: all 0.2s;
+  }
+
+  .filter-btn.active, .filter-btn:hover {
+    border-color: var(--accent);
+    color: var(--text);
+    background: rgba(139,0,0,0.08);
+  }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .project-card {
+    background: var(--secondary);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s;
+    cursor: none;
+  }
+
+  .project-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 24px 60px rgba(0,0,0,0.4);
+  }
+
+  .project-thumb {
+    height: 200px;
+    background: var(--card);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .project-thumb-inner {
+    font-family: 'Instrument Serif', serif;
+    font-size: 3rem;
+    opacity: 0.15;
+    color: var(--text);
+    user-select: none;
+    transition: opacity 0.3s, transform 0.3s;
+  }
+
+  .project-card:hover .project-thumb-inner { opacity: 0.25; transform: scale(1.05); }
+
+  .project-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(139,0,0,0.15);
+    opacity: 0;
+    transition: opacity 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .project-card:hover .project-overlay { opacity: 1; }
+
+  .overlay-btn {
+    padding: 0.5rem 1rem;
+    background: var(--glass);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: #fff;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    border-radius: 3px;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+
+  .overlay-btn:hover { background: var(--accent); }
+
+  .project-body {
+    padding: 1.8rem;
+  }
+
+  .project-cat {
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 0.6rem;
+  }
+
+  .project-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.3rem;
+    color: var(--text);
+    margin-bottom: 0.6rem;
+  }
+
+  .project-desc {
+    color: var(--muted);
+    font-size: 0.85rem;
+    line-height: 1.7;
+    margin-bottom: 1.2rem;
+  }
+
+  .tech-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .badge {
+    font-size: 0.62rem;
+    padding: 0.2rem 0.6rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+  }
+
+  /* ─── TIMELINE ─── */
+  #timeline {
+    padding: 9rem 0;
+  }
+
+  .timeline-track {
+    margin-top: 4rem;
+    position: relative;
+    padding-left: 2rem;
+  }
+
+  .timeline-track::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0; bottom: 0;
+    width: 1px;
+    background: var(--border);
+  }
+
+  .timeline-item {
+    position: relative;
+    padding: 0 0 3.5rem 2.5rem;
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .timeline-item.visible { opacity: 1; transform: none; }
+
+  .timeline-dot {
+    position: absolute;
+    left: -5px;
+    top: 5px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 1px solid var(--accent);
+    background: var(--bg);
+    transition: background 0.3s;
+  }
+
+  .timeline-item:hover .timeline-dot { background: var(--accent); }
+
+  .timeline-year {
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+  }
+
+  .timeline-heading {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.2rem;
+    color: var(--text);
+    margin-bottom: 0.4rem;
+  }
+
+  .timeline-sub {
+    font-size: 0.82rem;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+  }
+
+  .timeline-desc {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.75;
+    max-width: 540px;
+  }
+
+  /* ─── JOURNAL ─── */
+  #journal {
+    padding: 9rem 0;
+    background: var(--card);
+  }
+
+  .journal-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+    margin-top: 4rem;
+  }
+
+  .journal-card {
+    background: var(--secondary);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 2.2rem;
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: none;
+  }
+
+  .journal-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 48px rgba(0,0,0,0.3);
+  }
+
+  .journal-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .journal-cat {
+    font-size: 0.62rem;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    text-transform: uppercase;
+  }
+
+  .journal-read {
+    font-size: 0.72rem;
+    color: var(--muted);
+  }
+
+  .journal-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.2rem;
+    color: var(--text);
+    margin-bottom: 0.7rem;
+    line-height: 1.3;
+  }
+
+  .journal-excerpt {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.75;
+    margin-bottom: 1.5rem;
+  }
+
+  .journal-date {
+    font-size: 0.72rem;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+    padding-top: 1rem;
+  }
+
+  /* ─── STATS ─── */
+  #stats {
+    padding: 6rem 0;
+    background: var(--secondary);
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+
+  .stat-item {
+    background: var(--secondary);
+    padding: 3rem 2rem;
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: 'Instrument Serif', serif;
+    font-size: 3.5rem;
+    color: var(--text);
+    display: block;
+    line-height: 1;
+  }
+
+  .stat-num .stat-accent { color: var(--accent); }
+
+  .stat-label {
+    font-size: 0.72rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-top: 0.5rem;
+    display: block;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    padding: 5rem 0 3rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .footer-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+
+  .footer-name {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.3rem;
+    color: var(--text);
+    opacity: 0.8;
+  }
+
+  .footer-tagline {
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-top: 0.3rem;
+  }
+
+  .footer-copy {
+    font-size: 0.75rem;
+    color: var(--muted);
+    text-align: right;
+  }
+
+  /* ─── CONTACT BUTTON ─── */
+  #contact-btn {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 300;
+    width: 56px;
+    height: 56px;
+    background: var(--accent);
+    border-radius: 50%;
+    border: none;
+    color: #fff;
+    font-size: 1.3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 32px rgba(139,0,0,0.4);
+    transition: transform 0.3s, box-shadow 0.3s, background 0.2s;
+  }
+
+  #contact-btn:hover { transform: scale(1.1) translateY(-2px); box-shadow: 0 16px 48px rgba(139,0,0,0.5); background: var(--accent-hover); }
+
+  /* ─── CONTACT MODAL ─── */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(8px);
+    z-index: 800;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    padding: 5.5rem 2rem 2rem;
+  }
+
+  .modal-overlay.open { opacity: 1; visibility: visible; }
+
+  .contact-modal {
+    background: var(--glass);
+    backdrop-filter: blur(24px);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2.5rem;
+    width: 300px;
+    transform: translateY(20px) scale(0.97);
+    transition: transform 0.3s ease;
+  }
+
+  .modal-overlay.open .contact-modal { transform: none; }
+
+  .modal-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.4rem;
+    color: var(--text);
+    margin-bottom: 0.4rem;
+  }
+
+  .modal-sub {
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-bottom: 1.8rem;
+  }
+
+  .social-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+
+  .social-link {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.8rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    text-decoration: none;
+    color: var(--muted);
+    transition: all 0.2s;
+    font-size: 0.85rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .social-link::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(139,0,0,0.07);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s;
+  }
+
+  .social-link:hover::before { transform: scaleX(1); }
+  .social-link:hover { border-color: var(--accent); color: var(--text); }
+
+  .social-icon { font-size: 1rem; width: 20px; text-align: center; }
+
+  /* ─── COMMAND PALETTE ─── */
+  .cmd-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(6px);
+    z-index: 900;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 15vh;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s;
+  }
+
+  .cmd-overlay.open { opacity: 1; visibility: visible; }
+
+  .cmd-box {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    width: 560px;
+    max-width: 90vw;
+    overflow: hidden;
+    transform: scale(0.96) translateY(-10px);
+    transition: transform 0.2s;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.5);
+  }
+
+  .cmd-overlay.open .cmd-box { transform: none; }
+
+  .cmd-input {
+    width: 100%;
+    padding: 1.2rem 1.5rem;
+    background: none;
+    border: none;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    outline: none;
+  }
+
+  .cmd-input::placeholder { color: var(--muted); }
+
+  .cmd-items { max-height: 320px; overflow-y: auto; }
+
+  .cmd-item {
+    padding: 0.9rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    cursor: none;
+    transition: background 0.15s;
+    color: var(--text);
+    text-decoration: none;
+    font-size: 0.88rem;
+  }
+
+  .cmd-item:hover, .cmd-item.active { background: rgba(139,0,0,0.1); }
+
+  .cmd-item-icon { color: var(--muted); font-size: 0.9rem; width: 18px; text-align: center; }
+  .cmd-hint { font-size: 0.72rem; color: var(--muted); margin-left: auto; }
+  .cmd-footer { padding: 0.8rem 1.5rem; border-top: 1px solid var(--border); display: flex; gap: 1rem; font-size: 0.7rem; color: var(--muted); }
+
+  /* ─── TOAST ─── */
+  #toast {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.9rem 1.5rem;
+    font-size: 0.85rem;
+    color: var(--text);
+    z-index: 1000;
+    opacity: 0;
+    transition: all 0.3s;
+    pointer-events: none;
+    white-space: nowrap;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  }
+
+  #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  /* ─── BACK TO TOP ─── */
+  #back-top {
+    position: fixed;
+    bottom: 5.5rem;
+    right: 2rem;
+    z-index: 300;
+    width: 42px;
+    height: 42px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--muted);
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s;
+  }
+
+  #back-top.visible { opacity: 1; transform: none; }
+  #back-top:hover { border-color: var(--accent); color: var(--text); }
+
+  /* ─── REVEAL ANIMATIONS ─── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible { opacity: 1; transform: none; }
+
+  /* ─── RIPPLE ─── */
+  .ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+    transform: scale(0);
+    animation: rippleAnim 0.6s linear;
+    pointer-events: none;
+  }
+
+  @keyframes rippleAnim {
+    to { transform: scale(4); opacity: 0; }
+  }
+
+  /* ─── KONAMI EASTER EGG ─── */
+  .konami-active #hero { animation: rainbowBg 4s linear; }
+
+  @keyframes rainbowBg {
+    0% { filter: hue-rotate(0deg); }
+    100% { filter: hue-rotate(360deg); }
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 768px) {
+    nav { padding: 1.2rem 1.5rem; }
+    nav.scrolled { padding: 0.9rem 1.5rem; }
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    .container { padding: 0 1.2rem; }
+    .philosophy-grid { grid-template-columns: 1fr; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .projects-grid, .journal-grid { grid-template-columns: 1fr; }
+    .footer-inner { flex-direction: column; text-align: center; }
+    .footer-copy { text-align: center; }
+  }
+
+  @media (max-width: 480px) {
+    .stats-grid { grid-template-columns: 1fr 1fr; }
+    .hero-cta { flex-direction: column; align-items: center; }
+  }
+
+  /* ─── SEARCH HIGHLIGHT ─── */
+  .search-bar {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 2rem;
+  }
+
+  .search-input {
+    flex: 1;
+    padding: 0.7rem 1.2rem;
+    background: var(--secondary);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .search-input::placeholder { color: var(--muted); }
+  .search-input:focus { border-color: var(--accent); }
+
+  /* reading progress bar in journal */
+  .read-progress { height: 2px; background: var(--accent); width: 0%; transition: width 0.1s; }
+
+  /* ─── TOOLTIP ─── */
+  [data-tooltip] { position: relative; }
+  [data-tooltip]::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 0.3rem 0.7rem;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    white-space: nowrap;
+    color: var(--muted);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  [data-tooltip]:hover::after { opacity: 1; }
+
+  /* text scramble */
+  .scramble { font-family: 'Instrument Serif', serif; }
+
+  /* hero bg canvas */
+  #hero-canvas {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    opacity: 0.4;
+  }
+
+  .hero-content { position: relative; z-index: 1; }
+
+  /* ─── ARABIC GLOBAL ─── */
+  .arabic {
+    font-family: 'Amiri', serif;
+    direction: rtl;
+    transition: color 0.4s ease, text-shadow 0.4s ease, transform 0.4s ease;
+    display: inline-block;
+  }
+
+  .arabic:hover, .arabic.gold-glow {
+    color: #D4AF37 !important;
+    text-shadow: 0 0 20px rgba(212,175,55,0.4), 0 0 40px rgba(212,175,55,0.15);
+    transform: scale(1.025);
+  }
+
+  /* Touch trigger for mobile */
+  .arabic.touch-active {
+    color: #D4AF37 !important;
+    text-shadow: 0 0 20px rgba(212,175,55,0.4);
+    transform: scale(1.025);
+  }
+
+  /* ─── MASHA ALLAH HERO ─── */
+  .hero-masha-allah {
+    text-align: center;
+    margin-bottom: 1.8rem;
+    padding-bottom: 1.4rem;
+    border-bottom: 1px solid rgba(212,175,55,0.15);
+  }
+
+  .hero-masha-arabic {
+    font-family: 'Amiri', serif;
+    font-size: clamp(2.2rem, 4.5vw, 3.6rem);
+    color: #D4AF37;
+    direction: rtl;
+    line-height: 1.3;
+    display: block;
+    text-shadow: 0 0 28px rgba(212,175,55,0.35);
+    transition: text-shadow 0.4s ease, transform 0.4s ease;
+    cursor: default;
+    letter-spacing: 0.02em;
+  }
+
+  .hero-masha-arabic:hover {
+    text-shadow: 0 0 40px rgba(212,175,55,0.65), 0 0 80px rgba(212,175,55,0.2);
+    transform: scale(1.04);
+  }
+
+  .hero-masha-sub {
+    font-size: 0.66rem;
+    letter-spacing: 0.18em;
+    color: rgba(212,175,55,0.5);
+    text-transform: uppercase;
+    margin-top: 0.5rem;
+  }
+
+  /* ─── MASHA ALLAH STRIP (legacy — now unused but kept for fallback) ─── */
+  .masha-allah-strip {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.2rem;
+    padding: 0.9rem 0;
+    margin: 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: var(--bg);
+  }
+
+  .masha-allah-arabic {
+    font-family: 'Amiri', serif;
+    font-size: 1.25rem;
+    color: #D4AF37;
+    direction: rtl;
+    cursor: default;
+    transition: color 0.4s, text-shadow 0.4s, transform 0.4s;
+    display: inline-block;
+  }
+
+  .masha-allah-arabic:hover {
+    text-shadow: 0 0 20px rgba(212,175,55,0.5), 0 0 40px rgba(212,175,55,0.2);
+    transform: scale(1.04);
+  }
+
+  .masha-allah-sep {
+    width: 1px;
+    height: 16px;
+    background: var(--border);
+  }
+
+  .masha-allah-latin {
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  .masha-allah-meaning {
+    font-size: 0.72rem;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  /* ─── ABOUT INTRO PARA ─── */
+  .about-intro {
+    margin-top: 3rem;
+    padding: 2.5rem;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: var(--card);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .about-intro::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--accent), transparent);
+  }
+
+  .about-intro p {
+    color: var(--muted);
+    font-size: 0.92rem;
+    line-height: 1.95;
+  }
+
+  .about-intro p em {
+    color: var(--text);
+    font-style: normal;
+    font-weight: 500;
+  }
+
+  /* ─── FEATURED PROJECT ─── */
+  #featured-project {
+    padding: 9rem 0;
+  }
+
+  .featured-card {
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    background: var(--card);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 360px;
+    transition: box-shadow 0.4s ease;
+    position: relative;
+  }
+
+  .featured-card:hover {
+    box-shadow: 0 32px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(139,0,0,0.15);
+  }
+
+  .featured-badge {
+    position: absolute;
+    top: 1.5rem;
+    left: 1.5rem;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.8rem;
+    background: var(--accent);
+    color: #fff;
+    border-radius: 2px;
+    z-index: 2;
+  }
+
+  .featured-visual {
+    background: linear-gradient(135deg, #0c0c0c 0%, #1a0505 50%, #0c0c0c 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    min-height: 280px;
+  }
+
+  .featured-visual-text {
+    font-family: 'Instrument Serif', serif;
+    font-size: 4rem;
+    color: rgba(255,255,255,0.06);
+    user-select: none;
+    letter-spacing: 0.1em;
+    transition: color 0.4s, transform 0.4s;
+  }
+
+  .featured-card:hover .featured-visual-text {
+    color: rgba(139,0,0,0.12);
+    transform: scale(1.04);
+  }
+
+  .featured-visual::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, rgba(139,0,0,0.08) 0%, transparent 70%);
+    transition: opacity 0.4s;
+    opacity: 0;
+  }
+
+  .featured-card:hover .featured-visual::after { opacity: 1; }
+
+  .featured-body {
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .featured-cat {
+    font-size: 0.63rem;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+  }
+
+  .featured-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    color: var(--text);
+    line-height: 1.15;
+    margin-bottom: 1.2rem;
+  }
+
+  .featured-desc {
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.85;
+    margin-bottom: 2rem;
+  }
+
+  .featured-tech {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 2rem;
+  }
+
+  .featured-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.85rem 2rem;
+    background: var(--accent);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 3px;
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+    align-self: flex-start;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .featured-link::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,0.08);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s;
+  }
+
+  .featured-link:hover::before { transform: scaleX(1); }
+  .featured-link:hover { background: var(--accent-hover); transform: translateY(-2px); box-shadow: 0 12px 32px rgba(139,0,0,0.3); }
+
+  .featured-link-icon { font-size: 0.85rem; }
+
+  @media (max-width: 768px) {
+    .featured-card { grid-template-columns: 1fr; }
+    .featured-visual { min-height: 180px; }
+    .featured-body { padding: 2rem; }
+  }
+
+  /* ─── QURAN & HADITH SECTION ─── */
+  #guidance {
+    padding: 9rem 0;
+    background: var(--card);
+    position: relative;
+  }
+
+  #guidance::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(34,197,94,0.3), transparent);
+  }
+
+  #guidance::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(34,197,94,0.3), transparent);
+  }
+
+  .guidance-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.2rem;
+    margin-top: 4rem;
+  }
+
+  .guidance-card {
+    border: 1px solid rgba(34,197,94,0.1);
+    border-radius: 4px;
+    padding: 2.2rem;
+    background: var(--secondary);
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s, border-color 0.3s;
+  }
+
+  .guidance-card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, rgba(34,197,94,0.5), transparent);
+  }
+
+  .guidance-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 48px rgba(0,0,0,0.3);
+    border-color: rgba(34,197,94,0.2);
+  }
+
+  .guidance-type {
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(34,197,94,0.7);
+    margin-bottom: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .guidance-type::before {
+    content: '';
+    display: inline-block;
+    width: 16px;
+    height: 1px;
+    background: rgba(34,197,94,0.5);
+  }
+
+  .guidance-arabic {
+    font-family: 'Amiri', serif;
+    font-size: 1.5rem;
+    color: #D4AF37;
+    direction: rtl;
+    line-height: 1.8;
+    margin-bottom: 1rem;
+    display: block;
+    cursor: default;
+    text-shadow: 0 0 16px rgba(212,175,55,0.2);
+    transition: color 0.4s, text-shadow 0.4s, transform 0.4s;
+  }
+
+  .guidance-arabic:hover {
+    text-shadow: 0 0 28px rgba(212,175,55,0.5), 0 0 56px rgba(212,175,55,0.18);
+    transform: scale(1.018);
+  }
+
+  .guidance-english {
+    color: var(--text);
+    font-size: 0.9rem;
+    line-height: 1.75;
+    margin-bottom: 0.5rem;
+  }
+
+  .guidance-ref {
+    font-size: 0.72rem;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  .guidance-divider {
+    height: 1px;
+    background: linear-gradient(to right, rgba(34,197,94,0.2), transparent);
+    margin: 2rem 0 0;
+  }
+
+  /* ─── CURSOR GOLD NEAR ARABIC ─── */
+  body.near-arabic #cursor {
+    background: #D4AF37 !important;
+  }
+
+  body.near-arabic #cursor-ring {
+    border-color: rgba(212,175,55,0.6) !important;
+  }
+
+  body.near-arabic #glow {
+    background: radial-gradient(circle, rgba(212,175,55,0.08) 0%, transparent 70%) !important;
+  }
+
+</style>
+</head>
+<body class="loading">
+
+<!-- Cursor -->
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<!-- Glow -->
+<div id="glow"></div>
+
+<!-- Scroll Progress -->
+<div id="scroll-progress"></div>
+
+<!-- Loader -->
+<div id="loader">
+  <div class="loader-content">
+    <div class="loader-arabic" id="loader-arabic">السَّلَامُ عَلَيْكُمْ وَرَحْمَةُ اللَّهِ وَبَرَكَاتُهُ</div>
+    <div class="loader-transliteration" id="loader-translit">Assalamu Alaikum wa Rahmatullahi wa Barakatuh</div>
+    <div class="loader-meaning" id="loader-meaning">"Peace, mercy, and blessings of Allah be upon you."</div>
+    <div class="loader-welcome" id="loader-welcome">Ishan warmly welcomes you.</div>
+    <div class="loader-bar-wrap" style="margin-top:2rem;"><div class="loader-bar"></div></div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast"></div>
+
+<!-- Navigation -->
+<nav id="navbar">
+  <a href="#hero" class="nav-logo">SIA</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#timeline">Journey</a></li>
+    <li><a href="#guidance">Guidance</a></li>
+    <li><a href="#journal">Journal</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button class="icon-btn" id="theme-btn" data-tooltip="Toggle Theme" title="Toggle Theme">◑</button>
+    <button class="icon-btn" id="cmd-btn" data-tooltip="Command Palette ⌘K" title="Command Palette">⌘</button>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobile-menu">
+  <a href="#about" class="mobile-link">About</a>
+  <a href="#skills" class="mobile-link">Skills</a>
+  <a href="#projects" class="mobile-link">Projects</a>
+  <a href="#timeline" class="mobile-link">Journey</a>
+  <a href="#guidance" class="mobile-link">Guidance</a>
+  <a href="#journal" class="mobile-link">Journal</a>
+</div>
+
+<!-- Hero -->
+<section id="hero">
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-layout">
+    <div class="hero-text">
+      <div class="hero-eyebrow">Frontend Developer · Dhanbad, India</div>
+      <h1 class="hero-name">
+        Ishan<br><span class="accent">Ali</span>
+      </h1>
+      <div class="hero-handle">
+        <span class="hero-handle-dot"></span>
+        @ishanalisia
+      </div>
+      <p class="hero-tagline">Building Digital Experiences with Precision &amp; Curiosity</p>
+      <div class="hero-cta">
+        <a href="#projects" class="btn-primary">Explore Work</a>
+        <a href="#about" class="btn-ghost">Learn More</a>
+      </div>
+    </div>
+    <div class="hero-photo-wrap" style="opacity:0;animation:slideUp 0.9s 2.1s ease forwards;">
+      <!-- Masha Allah above photo -->
+      <div class="hero-masha-allah">
+        <div class="hero-masha-arabic arabic">مَا شَاءَ ٱللَّٰهُ</div>
+        <div class="hero-masha-sub">Masha Allah · What Allah has willed.</div>
+      </div>
+      <div class="hero-photo-ring">
+        <div class="hero-photo-placeholder">
+          <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBAUEBAYFBQUGBgYHCQ4JCQgICRINDQoOFRIWFhUSFBQXGiEcFxgfGRQUHScdHyIjJSUlFhwpLCgkKyEkJST/2wBDAQYGBgkICREJCREkGBQYJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCT/wAARCAGQAZADASIAAhEBAxEB/8QAHQAAAgIDAQEBAAAAAAAAAAAAAQIAAwQFBgcICf/EAEUQAAEEAQIEBAMFBgQDBgcAAAEAAgMRBAUhBhIxQRMiUWEHcYEUMpGhsQgjQlLB0SQzQ+EVsvAWYnKCkvElNFNjg6LC/8QAGgEBAQEBAQEBAAAAAAAAAAAAAAECBAUDBv/EACgRAQEAAgEEAQQBBQEAAAAAAAABAhEDBBIhMUEFEyJRcSMyYYGRsf/aAAwDAQACEQMRAD8A+dgExClI1soqAWiGogJgEC8qaqRpSkEARpEDZGkA5VCEQmAtAoCNI0iAgIClI9FEAUpGlEClu6NJqRpRS0gQnpTlVFfLaIFJ6UpQKRslpWFLVqoWrRLUwCKgqpKRurXC0pCBKU5U1IgKhKIQIpOdkOqBatCk1Ug4oEISkJ0pQLSFJqUQLSUhPSVAhCFJz0SkIEI2SlOlItAhSkKw9EpCCtyQ9VaRaWkFZCUhWEJSg2YCZoQaCOqZAQEQFAiEBqkdkCiAgPREdEAmAQHlRARARQClAFAUw6IFpEDZGkyBEKKZwUCCBGlAnAUCFABMQAlPRAaQKIRQIBfVEhMRslRS0imAu0DQ7ogJU9eqUhFClCFFN6VQCLCUNIThQoFSOanKF2grpSk5CUoEIQITlA/JBX2Qq0xQQLSBCYoFAhCWk5SlAtIEJkCgQhIVYUhCBCEpTlVlBtqUpNSICAAJgjSgCCAI0oiEEATAKAWmAQABMFKUpBALRqkQoSgACPKoAmAQKWoVSsIQq0AaLTBQBRRQcLSkUnChGyIRGkQEJpG47C5wP0RZBoUk5og7lLwDfqsQZUr3PkPK2Fm3M7YO+SoyssEXFsK5Q40T+Kzv9N9vjyzn5IiDn3W3UevoD6rHbOZbPNzAdeQ7j+617Q6Y2SOUfifwW0jEeLB4ronc9VVbEfNNG4y4Iy4F5dfXlcB1Ne6SLlBAd06O9B7rXx6u1ltabZZI7/8AspPq/KwcjW8wPXrZ3TVLpmS5ELHEAkb1QBKILXAkErSDPkmfy7kd7P5Lasc0xlodyuG9DrSqai4AoLGGe9kjGOhPIdgdxZV0U7JTQ2PorKlhiEpCtIpIVWS0lITkJaQKQgUxQIQVkIEJyhSBOiDkxG6FIEpKRurKSkIEIQITHqgQgrKBCchIQgQhIQrSEhCDaDdOAgi0oG5UAEQUQgFJmhSkwCCAUnrZL1TAIIiG7KDqmCBSEKITqdUAAtNVKDZFAtqdFFEBQ7qWiN1FEKI16LGz8n7PEGtFyv8Auj+p9lL4WTZpsiKAt5nUT0+nUrEyJjkS8znEMAFBv3aO/wCKxMSF0zX5MxYY2jk5nDYnr0TvyWSRnxBY3okVzV7BYvmvpNSBlETM5nkhoNiurq/QLAZFLlvNNLWfwjmAaArjkcxHMXco6egVxzpA1uLjARRmvOQC8n51sPZbxjGVUQn7LJ5nNDR0v/ZZeTqkssmzmBh25CbC1uWynOjM73OA7m1iNPIem3qQtM7bz7DDmj/DvjimAstL7Dvx7rU5UMsch52ODfUGwrcKV7CZBzBvQkUb+hWS9hZ5uZjAaNEk9f8ArogwMeQRyBx3reytlgtgkeZcrIfyEkmhV/Ja/Lge0NlLKDxbgOljuFVHIHDfp+imjem7lIMvPA5xhG9FpACbnfJUgiFEWGtNEFYsGrObF4DWNDdgPRv91aWPlc6UPLvckAH6bJpdtmx/iRhxaWnoQQdipW61QzMpkhZIAWdOdt7FbKGVssTXB29bg9kSmIpCkSgqhXBLSchKRSBCKQTFKgFIEJkpFoF6JTunIQPRBWQhScpKQKUCExCUlAiRys6pHBBtUWhBu6bogKICUJwLQRNSIAUQQCkyATAIAEwQIUCAnZQG0SNkoUUSiD6qUjSIilWpVKAoqcigCNqIGaLd3Wvzo/GynstzS6g7/usHb69VsHFrGFxrYXv39lhN52vc8uIsF7g6vL6BfPOvrxxr9UmL5WRQN8JrW1yg/dB7fNY8cbYIXPc0O35W0fzUfIHObGy+Zx3cevuUct3hsbE02NyR6Kzx4S+btjshM7wDz0d3E9gtjiTYuMPBhjEkjtvF6kfLsFheKxsYYzyk7Ej81U8kG2eY+oWpWLG5bpUGU9sbJY+c7uIt5IHyWuzMTkmMbTG9wNCiDX4d0uHlOZIOaTlH8Vnsst4gmyjJASXVYHqfRaRRi5UeK7nMkYe3blczn5vVVS6kJHl3hgEdByivdZWXgeJB4sfIwd96r5+q0ssfhbH8KpVG2dJDmYr8dltcGFzQdx67LTvHhvHT1pX4WR4c7Ddfwkn0VeQ0WTd1t+ahWREIhG0mjf8A5fwK2UWLGYhKx8jBdbvvf5/0K0kTg0Ausg+5tbfCzOZjoud4ZVA8vMPqOqKumlkpoLS4E1bQNj9FaySOJ8YY1vm2cboH6eqpZzYznjla5j+7D1H90jmgMMTt3NPlJ2Pr+YUabEm0O6SB/MwWDYNbqxVhEruqakCgrIQpWUlKBSEqZxSboIgQmQcgrpCqT0lcgQpHBOkO6BCgQmpAoNsGgdEKJKIKYboI0JggiEBCZAI9kBq03RK0prtALUCNIgUgiAG6Y9EBsooo0gmQKpSKl1sgCgFqJhshFLnfvKe4eXcg9G+/v2Woz9SsW0m3G/P1IHQrYagx0cJvySyfed6MA9fqPxXP+EZRzGyQO3RfPGb8vtldeIsxpCJdwHE7X2s9ksxc+Y8vMC0VvturmEYz2vjDXFzd210tYk07rLnScov7tLb5jI3w3ecbdCe6qEha+wA5p7JHSyTmrJ+i32i8NyZrOZzbHUhZzzmE3WuPC53WLUtDQ9ruYsPuslmSIDG5oo+YGv6LpHcFtYywx+/Ym1qNS0CbDc51iuvLe6+eHUYZXUfXPpc8ZuxTHlHxHFkjyHjcV1/BU5GnmYeJFGeUAlxJJr291jxOfGbotPy6rc6Zj5eazww11O6jff8A2X37p8uftt9OYIc11VtaaXmJBcKXZT8LNx43ENLiPxC1L9DklySxjCGgWRXosfcj6fZyaKM+blrtQPusvAkYx5cXOG3UdVdNpE0J5+Uja6r0WK6MOfYdyHqQTQWplL6fO4XH222VM3Ki8RrpHyNqx2/FUMeyWNliiD9brp+CTFx5oKkc57QfS6J+gRIeyTxH8wBcCARurSM/EcaLbvof6f0WVSw8d4jIFnyktHy6rNG+/ZIlClFFFUKQlKcoEIKid0KTEboFAEpCZQoKzslKscEhCCspSnchVhBWUrt1Y4JCEG1pMEO6PRAaRUBTBAEwChRCKgCIRCnN7IIAmCAKa7UAtDupSN0gia0lqIG6qEKAUpuiIAmLvCYX1fYD3PRBptTImbBC+R9Frd/mVMvTeHtrM1xeCJHAl23Mfb+5P5LTTScjeSN2/cjqSrs3Iex/K7YMYKr1NrExneezVMF2ex9VMZqLld1BG8vokClHMa+Q8wAA6n1VglawF7h13WZomhZmv5DY4Izyk7u7BMspjN1McbldQdF0x+bkNEbLs39F69w5w4IMYWyieo9E/C3BMWjRtDhzPrzO912cEWPiR+JK9kcY6lxoBeT1PUd91i9vpOm+3N5e2jfozQ3ZvKtHqnDrpLf4dkdAQvQcfJ0vKHM3MgIHfmWbHgYeUDT2OXLO+eXXbhfDw+XQW8/NkYkoaOhA2/JZ+mMxIi4Y0L/EHZzuQCh1JNX9F7CeFYp3gRhg777rHyeE/GPhyQxSBu9loNFdXHyX5jmz4p8V5j9jfqIkZhBuRMTyOdGLZHt15uhPoN1n4/CMGLG3maA5tA7Wfcn3XpLNGGLj+G1pAG1hqE2mu8MgRtJNdt1vLlrOPDNvJ9Y4Vjhax3JYIoNPRtdT+a8213QzhzyBvla02CvorWNLPLzvaRXSxdheXcYaTbCWtHKd7O6cPNZkzz8EuLzGLLkY0s8QtZ1ABNH6INynSeY/wCm/NVvjDJHRmhudu4UAa54jB8n8VL1fbxb4ZuBKWhvM4gkhhHqCbW45rFUPotCHF88YYAAHdFvWCmjoqgdVKTUh0RCkIFMSlKBHBKQnKDhsgrUTEJUCkoFGkCECEIIuCUlACq3Jykdug29qbpQUwQEJkALTAIJSakAnQKCmpDlRBQFEFAot6KKKBFo0igUCkQESpSqD2QRQQFqwtX5nmHHH3XGz6dVmAoTabmaizlwcLIzJ42ucGRMLuXtZr+qxndTbeEtuo5rP5AHuNUdmfICgfqsGIiMAHcv6+wWTOyaHKMOZDLHM128b2kEKqCMuke5wsNF/2Vnovs2HhzatqEWJELc91fJfQHCHCsGiadGxrQXloDiV5z8KdHZla0Zy0EMGwXuvJHixAlopu1V1XmdbyW5dj1vp/FJj333Wn1WaTDZUUXNI/wAo9AVx+r6Xq2rE+PNzMaf8s78q63UtTjDyZHCrvfoFr8PWftYe/Hxy+G6dNMfDj+hO5XNx5dvmR2cmPd4teY6lpfEWDITjvl8EdOV3LX0WHHxTreny8oyctpYRY5ivVpM/FyHmH7foV92SZHL+a57ibAxonMLsZjC4f5sLw+P5XQ/suzDnys/LFxcnTSX8cmx4J+LeYY2wZzvElogucN6C9m0zW4cmFlubdfNfOuDp8D8gHkAkH3XNXqfD7Z2QtcfEDQLr1XPyckl3i6eLjy1rLy9FL8V7b29aVMuVitcGur5hcfqmu/YMVz+Y3XR3deWa/wAe6tJkSOx3PoA8oBNfNaw3n4TkuOHl7fnnFyWO5Xj07LhOJOHxLG+2tIFmwOq8jg+IGtY8nNLnztro1p2/NdLpvxXyHtbjZ0QkZW7xtYX0y6TL+7F8Metxt7cnmfFmJ9j1vIh5SADYC1TZCG1zH5dV2PxOZC/Pxs3HdzRztPKa60f13XHR8vMC4Ej2XocN3hNvL55rOs/S4jJJdeRp3HqVvmha7RWn7OZD/Gdvktkvo+aUlITFKSiFKCJQQKUhtWFIUC2od0xFIIEISlWEJSAgqO6RwKtcKSFBXSBCsISuQbENT0lBToIBSZAKDqgcKKKWgN0oiBaIGyCEgBQFQhBQOEegShFUEG0apBG1ACooVEDMY57g1rS5xNAep7Beks0uTDlh0LBnkhgga05b4nFpnmPUkjqAdgOwC43g7GGXxTpULm8zTkscR615v6L1vQMeN0uVky1Qf4jie5PT+q8z6hyWWYT+Xt/SuHGzLkv8OT454LxNQwoxM8vzGxjw5D94kdie+y8byNMl0zIkieOcDcV0Pz/Je48X8Q6TjTNdlSzyPjdbIomXzH0tcRxvpcBji1HGjJiLh4jmehbYsfMBY6TmuN7b6rXXcGOU7p7jbfBnC5vFn5Nyav3XpueC48pO47Lm/hTiti0JsvhgEk3Q3JXWSQcx6Lm6jPfJa6Omw7eORwfEOJkSNf4bg2/ULkYuHZjlNyNTkn1LEGzoRKY+T3A6H5FevZGiNyRRApafN4Nke0+DIWfRa4ubt9HLwzL28aHCOXk6rLDjNjgx3ksaeYBobtu4G3drPXfou91LhTE0+PGj4dyJ5wIwyWKVp8KUgCyL3BPVbV/BmWJQ92UK70zdbTD4WZjHxKL3AVzO3pdOXVbn5OfDo5jd4uV0nQicmOUslhIHmhf1jd3G36r1bhpjTjsEjb2pajC0hl7jvufVddo8DI4/DAXDcu7Pcdsw7cdV5v8AEmR8cgghbuRvW9BeZMY6bI5DEN9iZX8q9i40037TnEsc5vM0sPKaIB9D2XjnEPCT8wCLAhBljmPM2V5D3bdyeu/uuzgxlnmuTnuU9TbqcLg7DfgCfL03xIrsyY7hJXzGx/BVv4G0aSH7RhujlBsbCv6bH2XH8P6RxFgZORNDkv077PGbB8rJX9m8vfvZXQ6RxO7V5mScoiyjcWU1vRxrZ35Vfuvrnhnh5xr4YZ4Z+Mp5cFxzjyYWXFiOc7kYSWg/IWfyXMsa+V4YzcuOwXYfE+USa5Exv8ETb+Zs/wBlqNCxW06c043yj2XfxX8JXl80/OxscGD7Pixx92jf5q9EDZRbfMD0SkWn6pTsgRApjuggUpbTkJCEEQOyPRAm0ClKUSltArt0hCsJSEoFJSOKchI4FBsgFY1ABEBAaTAIIhAVApaICA9EULUtAVFAigCYIUmAQRMAh0RBUAIQOyhKB3QbThzP/wCGa7p+Yfuwztc7/wAN0fyJXsupROx9Cz48b/Nik5iR3bW36rwdp5V7Rw1qz9U4fxtTxn8+Qxgx8yLrbmig6u9il5v1DD1nP4ez9K5f7uO/y4/TdEn1+cTTAPNmh6Adyt5rWjY7OHZ8YgSnwGOc4dOoqvkNlvczh2Jmkz5OEHYuZNbgzmPLXcV2tcvDPlyaFqGHLDLDJCA1vO7sSCaPoC381w43dmno8mu27dZwbAzT9CxsVh5qBs9+pXR+GHiyVyfC85OCDZNGhfoungyCW9lnP3dmGtTTLji3oBXtxA4mxshC5veuqy2uttX07rMi2sJ2nxX5mg16rEz4248Z6AD1WzfMANz0FrmtQ1KHJzPBmfywsHMR60rl5aw9pDkBtbOIduCBsuo0Zhey9+nULy/I+NHCWNqD9OkdNCYncnOYzyX8/wCtL0LRuJMV+JDkQvjdFKOZvI67HqtzjuNlymmbnjluY3dYXEuMBlMf05j+i5HifhZ+Xy5eI7knA61YcPQjuu01bOwtVmA5uRxINjo1WRxNezlcWnl226Lctxvhizc8vGJtLkaCM7TiX1QfGbb+HZHSuF4TlMyI43Y5Bo8u3M3rRXqmoaPG4udygbrVPw42czWgNodVuct9R8cuOe68E4nw36xxrk4rQ8RNl5HOaLIAAbssbF08aZzwCQycriOb13XqPD3C4hxcrVM6EjJyZ3z7ncR2XNH4C15q4kmz1O69Ph5O62T1NPJ6nh7Mccr7y3QBTdkoFpl0OMp6KVsjSV2yBSN1LRpAoAUh3TFIUAKBCZAoEKWuqdKUCFAhOQq3FADskJTFIUG3UpKDaZpQEIoJggWt0yh6o9kEoqBQFGkBCI2QCKimBULqQ7KctoiXZRtACkUErdRHsgSggXVfDriMcPcQRnIk5cLJ/dTB33Rf3XfQrlQUOu3ZZ5MJnjca+nHyXDKZT4fQ+oyuLHBtEv2bXRcpxLHBp+EcZjiJp2Oc6hdgb7ridP8AiLrGjaf4FDLjiHlDz5gPS1k4mtScR4TNakY4yjIfAWc1tYKFV6k2CvHvS54Zbvp7s6zj5MdT26nhTI8PFfBJs6663fyXV4cwjeGWNu35rz3h3JaJnbUAT1Nc1LtWS+Jyluxc0f7r58mP5PpxZbxdLjPLq9Duskz8tAla3DnHJY79B7KvUNSiwoTLI8NaO6+P8PtJ+2bkymQFo+u65jX9HbkRGRsxjcN7b+i0eX8So2SOEELnBpqz0KwcnibOzYXNcCxsjeb7226+mPFn7rH38fhhahgaEJWOOFjzZbLJc5gVuk6lkRF2LhYb2sMhceV/kF+l9FpMPTsjJlfI7JYx8rvM8W4NC6eDRM3FwmHDc1zfMXSukaOcHsB+C6uySea+H3M7dyNJruh6nqGpxZUet5bnveBFBE4tjjPpt+pXrPDrp8fDjhyntfK1o5iD3XkmkatlaZxCHZjD4L6B5ugN9V6jiZsWREzJgeHMeFjm3NLw5TKVv8lzXRVt9Fy+pFzGPbGCXPPIAPdbeXOa3Hduud+0/aNYjjeJDHF+8eGNsuvYD9fwWMZvy1nfOlHH+ezSeFXOZTJpohDG33cCCfo0H8V4i4bruPinrBzNcZgMd+7w2eZoNhsjuo+gofiuIPVep0vH24b/AG8fruXv5NfE8F6KWipS6XGgUItTohaAFKUyFIFKWk5SFApSkpykcEAKFo9kp2QApCE3VKdkCFKQnKQoNmEzUAUzUBTBLagdSBuqiANooGCZICmtBK3RUBRKCD0TdkoTbqAIhAohACUpG6JRVC7qJtkpQHaqPddH8Pbk4T1lrYmkxZbXb7VbRf6LmrXc/DmHm0jXGloqSWI/PyuXL1fjj27Oi88mlem5TIshwdbbbYcN/wA/xXX6XktMQc1xc3tuuL5mQ5joi1zS01R2Brut7pmUZcdxAbd7AHovN5fPl6vDdeHZQZ4aOvQVdrjePszKy8dkEBIa406ls25LqIA6oOw/H/eyCx6L4Y3WW3RlN46eYDQNYMrDjFpA6tde4XWaVwvqmfjtDs7Hjf0DXsJr811P2SFga/lALd0r8nGibzEkEemxXT9/fuPnxcOON8qG8F69hQc8DcTJbtZYS0kD5rFz3a7DE1sukTllEU3lcR+C2MPFwx5uWTNLO4LxYWdPxa7IY1sc0MzO5B33W8bHRZh6jzvKzMYyNjmtjy6iyQUWHtsVsOGeJThagdJMnOx2zTffc7I8T6LFr+RFNOwxywig+M04jsD6rnNL0qduvRubzFkT+YvINk9v6r66xyljzeS3HPcerZmoNgg5nOBptlarTc12Dw9qfEeR+7dM1xhs3bQKj/Em/que4z1t+Hp4hYamyPK0eg7rktT4j1HVcaHEnnrGhADIWCmj3runD09uM/T5c/VTHK/thZMz8iZ80ry+R7i5zj1JPUqoooWvSeUCKHVFESkpRJQtAO6hUJtLaAFKUxSqgHZIUxKUlQApCn6pCEC2lKcpCgXugUSkJQbRMCksJggdCt1AUbQQDdP0S2oHIGCYNStIT81oFTA7JSgCgtCISApuZASh7qWogBQtQoIGSE7onoggIC9K+GUI/wCD6k8jYzMA+jf915vG1z3BrWlziaAAskr2fhfhyfhfSJ8HMex2WZQ+eNn+i7lHkJ7kCrrvsuPrrJxWO76fjbzSuV17Bd9qdNG0NIO/9Fi4OpGFwZJ5Seq6jWIwW8wbZ9QuVysaO/EqnX0915mGW5qvXzw7buOjxclklGxfU2tzjkTRhra/qvPMbVHY7qLrHY2t3hcWQYvlc4WelmgEvFfhceaa8uiysaR33e/ZafJwsgg3tatHGeNIwSMA2FD3K0ufxwyUuEdU6vorjxZb9JlzYSe1GW1sMgjcA4uPfusnCxjEeZrOQd/ZcrFr7ZtTMktOax4DAf8Ar3XoWJqODlxNY0tMjmiz9F0cmFwkc+HJjnaqMv7surfoSVhRTQ43izPPIwbuJWblyxxB0YI9VwvEWufbScKA1Cw09w/iPorw8dzr58/LMJtgazqkms6i7KLj4bRyRt9Baw+6gAA2UC9STU1HkZW27ooUmrsh02VZKdlESggBUI2TIEoEQqkxKXqghSOTlIVQhQKY7JTRUCoFEpUAKQpilKBSkcnSlBsqtGtkoKYFAQSEwQCKCI0oOih2QQXacdEgThACoNkyiAgpkoTWgCgURBQC0CpanVAEzWknbdQBXtaceI5BHQeT3Klulk29B+AvCg4n41ObNFz4Oi8s8tjyumJ/ds99wXH/AMPuvR+KNLdpWv6qC4kZOR9rbfdrmNH6tKn7Mow2cBZT4A37TLnyOyPUnlaG39F2/HXDr9b037XiM58/EBcxg6zM/iZ8z1HuPdcXVcd5MLJ7d/R8k4s5b6rxzU2mRjgBdLkdWjkD3AElvQFdmciLMi8SEki6IqiD6EdiPRaXU8K/MB0/IryePLV1Xt8uO54cdkB0Vtc0OHXouez2StkAbsy+pO/5LtpdOMjyHAC97WLm6K10JAZykG6Hcrt4+WY1wcvDco4eTU8nH8gcT26+q1supScwILgKW51PQ528z2t5a25a3K1DdJmkNPsHvfQLvwyws283kw5N6LhZrvE5rOxtdRpPEj8OnyPoC+nX/rZaGPR5fEbDBGS7fzHouk0XhUZWQ1ryCyM04Dez/wBFOTLCzdXjxzl1Gyy87MztMyM55MYNNA6E3ta50G+q9B1fh7JyOHM12G3bDiGVIw7ksa4A18gb+QK8+ogp093jtOqms9VCiEqIK6HKY9ElokIUgCKiiAFKmKBNIFKgUJS2gJKQ9UyUqhXdEoCYpSaUAcEjkSUqBSgeiYhIUCoFEjdAoNgmClIoGaUxSgIhBFN0eiO1IAEyWkyCEoAlQoDqgsaUeqUFMgnZCiUUzQgSkR1Vjoi0cziGN9SqBmwMeByl+/U7BTbUjLjiayPxpdmDoP5lg5uoGcFt7DYV0AVOdnyZD+vl7AdlhOeVnVvmtbk8R69+zbxd/wAH4qn0LIl5YNSbzR2f9VvQfUX+C+pwa3C/P7T87I0zPx8/FeWT48jZY3Ds4GwvuPgjifH4u4ZwNXx3D/ExBzmj+B/8TfobUynyuN3NOF+K3BOTgSycVaDESxx5tQxm9D/90D/m/H1XBw50Gpw8zCA+rLV9LCiC1wBa4UQRsQvD/ib8M38NSv1vQ2H/AIY91yxN64rj/wDwT+HTpS87qum3+eL1ej6vX9PP/TjZozH5QL7rGltw3FUKAWRBmOmHLK3f1V8mOJBbQHbbEdlw709C479OfysJuW7lLb7VSxmcOse+wPnst4ccwO5u/qtjjOiMfM3d/pW6+mOd+HyvHL7aaHQ4YGUGeY9+i3Oj6KY6dyAVua7rIgx/EeC4GiVuC9uNAT90gK5cl1pnHjm9r+DpMebjWPSpWh0MuFIydp7tkPJuvC9Z02bR9Yz9LnaWzYWRJjvB9WuIv6ij9V6l8J806l8Q9b1Bzi5kIihb7Ueb+6539ojCfonxSzMtsf7nUoIcogdyW8pP4sP4r1ekmuPTx+tu+TbgjsoqWZcE33ZBfodirV0uQ97IWgoUARBQ6qKiHqlO6YpTsoFJQKJQ7IAlJTIEKhTaR26sSFQIUEUCUCkpCiSggFpSiUEGyKIS2iCgcBFKigKloWjaAhMElo82yCE2o1Qbp44nyO5WNLnegUVAEwCyosKt5nUPQf3TSTw4o8rQD691Lk1MKrZiPO76YPfqkmyocUENPmHfqVi5eqOcCGmh6LUzTGRxNqTdXxGTmag+Yk+qwmvPO0k9ClJspXHlojsR+q3pjbLtKiN1CrpCFe3/ALNXGzsHU8jhfKlAhyrnxuY9JB95o+Y3+i8RItZemahk6VnY+fhymLIxpBJG8dnBSzcWXVff0cge0FPysmY6OVjZI3gtexwsOB6gj0XLfD7imLjDhrD1eEjmkbUjR/C8bOH4rqgO4Xzj6vGviD8OBw3KdS0uNztMldXINzjOP8J/7p7H6ei4pgEbq+76r6hbFHPE+CeNssUjS17Hiw4HsQvGPiL8PZNByPteAx0mnSu8rupiP8rv6Hv8153VdN2/nh6er0fV939PP3/64p2G2dvMatTC037O8ud69+iaKSSHyP3HRZXiuc2rG64JdPR1tZGG89N7LUcV6wNP06V4cA7loLatBhhcXWLHVea8f6h448JhIAW+LHuykr5cuXbjbHe/s46cZcTUNUkbYyMt7QT3ptf3WT+1hpheeG9UazyvhmxXEeoIe39XLq/gTop0/gjSIeSpJ43ZT/8A8jr/AEpW/tM6acn4ZYeS1vnws2J5Po1wLD/zBe7wTxX5/qL5j5CceTdXQZEjfuPcD6dkuRGWk+ipY4tI9V9XwbWLUj0lZ9WrJZOyUeV4Pt3WqaQW+6nXfoU0NwDspe61keXLEKvmHusmLOjead5He/RQZdoFAODtwbUtACgiUpQFKSoUhKoJSuKN2EpKgUlK4JkrkCEKIlA9EClKUxSOKDZIpUQUDgqWgFEBRCiycbDfM4F37pn8zh+nqptZNqK2WRj4E04DmtDWH+J2w/3Wc2PDxhbKkcOrjuqcjUgCQ1wpY7v03MP2cYGPFu9/Oa77BGXLiiZysAH0Wqlzy4nchYcuQ4nqmrfa7k9M+fUHXXMtbkZjpD3VTnlwJSdVuYsXIC4nqUKT8u6gba0yr+SWZvl27kfqr+TdVTxlzaaaPUFEZHTogR7rDbnSReXIiNfzNWVFNHM22PBVUSoDsD2Rd5hQSkeqg9w/Zo4zOm8QS8OZMn+H1FpfCCfuytHT6j9F9PgU4ei/P3R9TydI1LGzsSUx5GPI2WN4PRwNhfdXBPFGNxlwxp+twAAZMdvYP4JBs5v0IKzlGsa3zSCB7rH1XVNOwcJ8epFr45Wlph5eYvHyWn4l4qg4fiDABLlP2ZGP4fd3suNlyJtVm+05EzjI/q++vyWN/D6THflqtc4RbIZNQ0OKabDJJ8JwuWH1sDqPcfVc5DjGSXlDTQNE0vUdOa2BhD5pWgDYt9UmTpuJqhlZLBU7dxkNaA4/P1Hz3XncvRzK3s/49Ph664zXJ/15RxG84uMGNNWF5LxC188/INy48o+Z2XrXGcb455GvbTo3Fpb6VsuO4V4cfxPxlp+CYi9hmEsjdxbGeY7j5AfVc/B4unVz+Zt9D6Q+LhHhiXPkbUeDhtpvsxgDR9TX4rzqLiHWfiF8OuI8HV8z7RKIJerQA1zR4jC0AbDygfRdNx9NlZGI3Q8Vp+zx+ad7f9V/p/4R+vyXn/AoyINRztL6DUcOaJvp4jWOr8iV7GH46jxM/wAt5PBpAJN62cLWK6MsO26yWtIiYD1AooEWaX3rmUtsGwr6vogGgG0RsUB5UhjVgOynU0gpHiRm2OI+SvZnSNrnAcpygqtzFNLtmMy4pB97lPoVaD6G1rOWk+NkmJxa7cXv8vVBsCkcN09oIKzsgnISlAEhTFKSoAQlKKBQKq3Kwqt1oNkoEAjSBlAUEzAXOAHdBc2RuLGyUtDpHupgPQepVL9Xnle573uI6LHz5/8AGMYzdrBQWI0miFl9PTKdnPcD5g2/Qfqsd0znWC433VZO5UcK8w7Ba0xbTh59VCbKDSHNsbpgFU2FWhQtWUiGqoUNNbqNG6f5IUghHukItWIOGxIG6Cl0Qcd90rMKNsnictOVmLKJWXVOBpw9Crx0tBX0G4SuVpG6QgUgUHde7fs6caZuJBqvDkLwXyN+143PuGH7slD/ANJ/FeEELpeAOI3cK8V6ZqwP7vHnb4w/mid5Xj/0k/gppZX0pomBl6nNl4OpvdJllxkZK87vWxg0x+I4wyA8h6E9itvrWD4WRiajikeUjzN6Oaf+rW/biQ6hjtnDRzOHmHoVjsj7fcvtzOLHJAw88d8p3I9Fs8fGifTmcwB6gFbXG0xpa5paHN7X2VT8F2K62Dyp26Tu28b+ImKMXWcwPvzu8QEmzThYWV8EdCY/U87VSRzcngQm622LyP8A9R+Ku+M+KMbJw8zoJ4nMPzaf7OXYcA8Nu0TQcRj2ETujD3duUu8x+u/5LzuLj1z3/D0+Xl30+P8AluXaLC97pJGgkm157xnwR/wODI17TJzHNhyDLjYRtYdZHyq16s6/DFijS0/FeH9t4fzYKvxIXN/JetZK8jdj4Xy2mPMymO6iZ5/FxP8AVUA32Ww4gxzj67kxkEXTt/l/stcQWndSJTbKcuyBJ61YTtcHdCqiNHZGhuUOjkbUE6IkeyU7qE7KhatVSjlmjd2dbSrb3VOUajafR4KgzcSQvio9WmleVgYj+XJdH2cLWaVFQpSVCkQEm0pRSu2UAckJTIFApKRyKDkGxG6PRICU4QME4vkcWjcDb5lJSsZlx4jC57bvp9FK1j7YTcR5kfNJsG9PdUuj5ASVe/PdO9xOw7AdlgTTue42dlItS907HWVjcxtWsd6LcYWgcj67HcKwJXeaOx1G6jXcwCqLQiNkoKIKA/qoVFO6AFHekeVTsgwpf8PO2UbMeeV/z7FZl30STRiRjmOGxFKrDkIDoZDb2bX6jsUGQaQLdk3L3Ch3CCkp4XUdx1SuCUOpyg+x/g7r44v+GWGZn8+VgA4U99bYByn6sLfzXY6DlFjnQuOw2Xzx+zNxR9g4nyuH5pKh1WHmjBP+tGCR+LS4fQL36dpwc/nGwcbVv7bx/TqIgGSiujuqukgbI0tI3WJiSiWNrr7WtiXNfHz9wEZcFxrwm3iCfRcd7eZkOoNfL7RcpLv+Vo+q6h5a1pY0D06JTN42S8jcgcv1KVzSxxB9VjHCd1r6ZZ24zG/BJDTVjzjnxi0jaiFfkfc2VUm2Pa+r5vij4l4wxeMMqNreXlc5lfJx/uuVk+9S9D+NeF9n4vyJqoPld+gXnsnW1mF9gOlKNG9jYojooBSqIfvKE0h1dajt0BBtAmvkp2VbnVsghdSqyj+5P0/VElVZDrjr/rqoLWyeHlsd9D9VtLWmnIEzfotq02pVh+6VylpXFBErkUpQLahUQOygUpSilcUGxCNpGlOgIKrkgflSBjQaATgppdQ+zweHHQe4eYqVrFh5fJiM8Nm7zsT6LCDObcq4Rue7nkP4pSd9lItVlqlUo87pS5bYZEMnYojyOLfqFRG7e1c/YMeN+yqLAU7SFS03urAUDk7phSQGwjeyBrsohJ1pNdIIR3WNksLCMhn3mdfdqyR7okX16IBG4PHMDsd1DXQdVjY5MMr8c9B5mH29Fkn1QVOVZ6q8hVPCDb8Na3k8Pa1g6timp8Gdk7K78puvqLH1X2zkZWPrmk4mrYTg/HyImTxOHdrhY/VfCUD6K+qv2c+JRr3AuRoUzwZ9IkLWA9TC+3N/A8w/BFj1LQ8sSxcl7hbd0pbE6jW1rktKmOJqDoXbC6XR5bv8JIR15SpPS5e1Gmv8wkY3m8ZxPXp2/osrKB8XcVYtYujYjZMPFMl3G3mr1skj9Vn5Yssd9Ew38mXthzjyAUqpm/4elfMNgkyB+4WkfLf7QWB4eomcCh4jT87BC8emGwX0F+0Lig4JlA3HKT9HBfP89copZnyuRWG9kaSxnZNzDotMlcKdfshSjjTkeoQK40Fjl26ulNBYhduoGc6lU/zFrfVwTOdsq2G52D3tA+Sf3hBWzw5PEx2O71RWnndzSErO0qS2vYe26lWM8+yU9E9WlKgUFB3RGkCqFKUlM40kO6gCVyYpSgzhsnBSBM1AyqZjeNK6R2zOyuDefbpY6pMiYBvhxCmNFWs1vGMXJlaAWtGyxd/VO/cpLViUtJSFYDaUtvotMkA3V4PNERZsBUG73TxuooiyJ3MFcCsRjuV7m+hV7CqLrsIg7JQpaBwU1qoEpv1QONx3RuwlaTSPdBTkRuc0SMHnZuPf2VsT2ysa9vQhMseP/DZJjP3JPM32PcIMikjwFYemyrcOqCkGnL0v4C8W/wDZf4g4LZpOTD1IfYZ7Ow5j5HH5PA+hK81Oyux5HMcHNcWuBtrh1B7FB9xa2w4mfHM0VzH81v8AxBPpz3jqYyfyXFaHr44x+Huk680gzSwtMwH8MrfK8f8AqB/FdPoE32nTzGTuAWp8tfDd6e0Nx4q/+m39FbkC4yfQ2kwx/hoj/wBxv6K6QczSPUIy12T90FJObx1Zkf5VqmU3jBPlXiXx7ga/hvLfW7WA39QvmiU2219Q/G1njcM6mPTGcfwIXy+4fulJ7q31CMTjdVR9aVo8pWmVbzTkwOyV+7j2QuggqyH+XZYt7q6Y2scndQMTslhP74n0ao47KREBr3euyCt3mcSsrT38uQB/MKWKdk+O/klY70IUG9BQKg6IFRUtKUeiVyoHVKVECgBSkolKRsgzwiCkBRtQCeYsaGt6vNIZLfBYGd63KPKBOyR+7YwXfXssSad073G9lmtz0qc60CUClJ91YzTA7om+oSgpg7stIXnadnBDlANtOyZ8QfuOqo8zHUURZKeV4d/MFZHJsqZnc0YP8u6EbuiDOabTe6oa6lY12yoYdVZYVN7p2ndBaCpeyQdERugdqTKj8WIgGnDdp9CiOqb2QJjyieNrqo9CPQqx242WKbx8q/8ATl6+zlldkGO/YoMdTk8m6qGyD6J/Zq4kbk6TrXCs7/Ow/bsZpP8ACabIB9eU/Ur2ThWUtkfE5fHvw44odwdxjpes8xEUUoZOP5oX+V4P0N/QL680twxtdezmBa420juD0KNT07HFfWOwegr8CreawsfH/wAtw9Hn+/8AVXNKMsPLFRu9iqHG8YrJzejx67rFI/wzvYWnyvw8j+L3n0DVR1/wch/JfLMh/dr6g+LDydD1Cr82FL/yr5fdvHak91b6iuL1VoKqZ1T3utMkcbJI9UjzQRcaVb3KCiZ1FUg7ppjvSr5gNqu0DSFS+WIDuUJPvUo7zOAUCgb2iFD6BQBBvI3c0bT6gFMqcR3NjRn2pXWEUCkKYlISghSkolKeqAFAolI4oM6kbSg2ioMTOyHeIIG/MpZG+BEG/wAbtz7BWtbFBPNlT0ejY2nua3K18+W6eQuBslRpYSgUotrbd1Q5rKsZqwBAkjdDmTCnBUMyQDume1kgsdVQ6EncFJb2FVDFtAg9DsqYXn8Fb4nN1WPfJK4KDNY61cHBY0bhSsB90F3dM1VtOydrlRaD2R7+yrB3TBBcKSl26AKh3QSaITxlpPXp7FJiTGWKn7PaeVw91aNliz3jziYbMfTX/PsUGS8Klwoq/YtHdVPGyCMIOx6d19WfDPiZ3EHDeiajI/mmhjGJOb354qbZ+beU/VfKDDR36L1z4E8RGHUM3QnupuQ0ZUO/8bNnD6tIP/lRY+t8Z3P4gHqD+SvA3pa/SpfEiYR/HE136rOL+Xb+LqqijUBTb9liN/yHDuWn9FlZxJiaSVitcA2lPlZ6eN/FUXoOb7Ycv/KV8wOP7r2X038V5f8A4PqcfduJMPyK+Y3/AOUp81b6hWGkxNNKRiLj5StMqQSQkPuUS81uQ326lVPkA6Cz6lQVSAuNjp6lKKb06/zKOJPU2gN9lAHHcD0Ruh7lLu52ysBZHv1KAVyizsgLKhLpj6BMQGCkG1wv/lmeitcFRhGsVnvauJJRQtAikaQvZALQQKHRBCUhpElKSgzAUyQBN7KDR5eQ/KyCAdgaA9lkQwCCPmd94oYWO2EPyJ+gcWtb/MR1+iqnynTPJ/JRTOcXnrsiGnsq4w9xFLIDCwWSqgNGyhVb5KS+Kqi8PIT+I1w3VAkDgpy83Qqh3xt6tItYUxqW1lFj297WJP8AeSi+N+wVzHbrFiNhZDCoLw60QVWCnabQXNNpwQqQeVPzfiqLObfZMFRe6cOKC690s7RLE5jujhSAcSj80GPhSktMb/vx+U+6vcR3WJlE487J2jY+VyyQRILB6oFHVbbhjWH6Br2BqcZr7PM1zvdh2cPwJWpIpMw9j0KD754ay2yafiva4Oa6I0fUWCFtY8lrstkMjWkBxO/UtIXm3wH1wa/8PtNke/mnxQ7El9eZmw/FvKV6Y0Boodkyx2sumPnDwsQ7khrtlgQz8xpbLKj54Hi+oWmx9pCPRCPGPjRleBFq8R2vHeB9f/dfOb/Mxe7/ALQmR4OoZsV/5kDPzIXg7j+7U+VvqEaeyMjqYkZ1QmcAAqyqfXKqCrneYbD8dlS4gd7PsgQ7oEgbDf3Uc4nqkcaCgaMc10d1c2BtW5wWO1hLQWhWAOHVBYS1g2VLnWUXlIUGz06Tmicw/wAJtZVrXaa7lmLfULYFFFIUbURCUo5MUpRSIFMUjiiM0JxXfoqwUSabv32UWNVkukypT1DegHoE0WIB1FrKiY3c0q58hsQpvVRoHFkLfdYss5eVXJMXlKA49lZGbTUSrGx2gwK9oVRWI07RSsodVU+QNFBUB7+ULCmdzOV7nWsZ5sqB4yshjlixndXtNIq8OTtcqA5O0ojIabVgWOCrA9BYQmb0SscnBVB67qA+iIR5QEFU0fisLT3CxsKYtuF/3mH8lmla/MaYpWztHsUGc/fpug0+iWNwkYCNx1THYoPe/wBlbiPwNU1Xh+V/lyGNy4Qf5m+V4/AtP0X0vfdfC/ww4iPC/Hei6mXcsTMlsc2+3hv8rvyN/RfcXOd97rZaF7zcTh7Fc+wjxZD7rd+IS0rR1yyS7KLHz1+0oeXWYXD/AFsZv4h5/wBl4k/dgXtP7SDxJn4Lr+60t/E3/ReKu3aFPkpB6KqZ1HYq2+yxpD5yEQjjZ3KVyLtkhKBSkk7BMTukdua9FA8RLVcXbbdVQ0Gk9kIJyFxTBlC0ASUXHlagsxXgZLPnS2dLSxkiVjvRwW7KKUoFElKSiBaBKhSoqJSUSkKI/9k=" alt="Ishan Ali" style="width:100%;height:100%;border-radius:50%;object-fit:cover;object-position:center top;">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-indicator">
+    <div class="scroll-line"></div>
+    <span class="scroll-text">Scroll</span>
+  </div>
+</section>
+
+
+<div class="divider"></div>
+
+<!-- About / Philosophy -->
+<section id="about">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label">About · Philosophy</span>
+      <h2 class="section-title">The way I think<br>about craft.</h2>
+      <p class="section-subtitle">Not a biography. A way of seeing. Every choice I make traces back to a handful of principles I've refused to compromise.</p>
+    </div>
+
+    <div class="about-intro reveal">
+      <p>Hi, I'm <em>Ishan</em>. I'm a proud Muslim who strives to live according to the teachings of the Qur'an and the authentic Sunnah. This website reflects my passion for learning, technology, creativity, and sharing beneficial knowledge. My goal is to benefit others through my work while seeking the pleasure of Allah. May Allah guide us all to what is beneficial and grant us success in this life and the Hereafter. <em>Ameen.</em></p>
+    </div>
+
+    <div class="philosophy-grid reveal">
+      <div class="philosophy-item">
+        <span class="philosophy-num">01</span>
+        <div class="philosophy-heading">Curiosity over comfort.</div>
+        <div class="philosophy-body">Comfort produces the expected. Curiosity produces the remarkable. I choose to stay in the uncomfortable territory where learning actually happens.</div>
+      </div>
+      <div class="philosophy-item">
+        <span class="philosophy-num">02</span>
+        <div class="philosophy-heading">Learning over ego.</div>
+        <div class="philosophy-body">The moment you think you know enough is the moment you stop growing. I hold my opinions loosely and my curiosity firmly.</div>
+      </div>
+      <div class="philosophy-item">
+        <span class="philosophy-num">03</span>
+        <div class="philosophy-heading">Design over decoration.</div>
+        <div class="philosophy-body">Beautiful design isn't ornamentation — it's clarity made visible. Every pixel either earns its place or gets removed.</div>
+      </div>
+      <div class="philosophy-item">
+        <span class="philosophy-num">04</span>
+        <div class="philosophy-heading">Precision over complexity.</div>
+        <div class="philosophy-body">Great software is invisible. It does exactly what it promises, nothing less, nothing extraneous. I pursue elegance through constraint.</div>
+      </div>
+    </div>
+
+    <div class="reveal" style="margin-top: 2.5rem; color: var(--muted); font-size: 0.9rem; line-height: 1.9; max-width: 560px;">
+      Every project is another opportunity to create something timeless. <br>
+      <span style="font-family: 'Instrument Serif', serif; font-style: italic; color: var(--text); font-size: 1.05rem;">Perfection isn't loud.</span>
+    </div>
+
+    <div class="location-tag reveal" style="margin-top: 2rem;">
+      <span class="location-dot"></span>
+      Based in Dhanbad, India — Available for select projects
+    </div>
+  </div>
+</section>
+<div class="divider"></div>
+
+<!-- Guidance from Quran & Sunnah -->
+<section id="guidance">
+  <div class="container">
+    <div class="section-header reveal" style="text-align:center;">
+      <span class="section-label" style="display:block;text-align:center;color:rgba(34,197,94,0.7);">Sacred Words</span>
+      <h2 class="section-title" style="text-align:center;">Guidance from the<br>Qur'an &amp; Sunnah</h2>
+      <p class="section-subtitle" style="margin:1rem auto 0;text-align:center;">Words that anchor every decision, every line of code, every act of creation.</p>
+    </div>
+
+    <div class="guidance-grid">
+
+      <div class="guidance-card reveal">
+        <div class="guidance-type">Qur'an · 94:6</div>
+        <span class="guidance-arabic arabic">إِنَّ مَعَ الْعُسْرِ يُسْرًا</span>
+        <div class="guidance-english">Indeed, with hardship comes ease.</div>
+        <div class="guidance-ref">Surah Ash-Sharh, 94:6</div>
+        <div class="guidance-divider"></div>
+      </div>
+
+      <div class="guidance-card reveal">
+        <div class="guidance-type">Qur'an · 65:3</div>
+        <span class="guidance-arabic arabic">وَمَن يَتَوَكَّلْ عَلَى اللَّهِ فَهُوَ حَسْبُهُ</span>
+        <div class="guidance-english">Whoever puts their trust in Allah, He is sufficient for them.</div>
+        <div class="guidance-ref">Surah At-Talaq, 65:3</div>
+        <div class="guidance-divider"></div>
+      </div>
+
+      <div class="guidance-card reveal">
+        <div class="guidance-type">Qur'an · 2:152</div>
+        <span class="guidance-arabic arabic">فَاذْكُرُونِي أَذْكُرْكُمْ</span>
+        <div class="guidance-english">Remember Me, and I will remember you.</div>
+        <div class="guidance-ref">Surah Al-Baqarah, 2:152</div>
+        <div class="guidance-divider"></div>
+      </div>
+
+      <div class="guidance-card reveal">
+        <div class="guidance-type">Qur'an · 2:153</div>
+        <span class="guidance-arabic arabic">إِنَّ اللَّهَ مَعَ الصَّابِرِينَ</span>
+        <div class="guidance-english">Indeed, Allah is with the patient.</div>
+        <div class="guidance-ref">Surah Al-Baqarah, 2:153</div>
+        <div class="guidance-divider"></div>
+      </div>
+
+      <div class="guidance-card reveal">
+        <div class="guidance-type">Qur'an · 39:53</div>
+        <span class="guidance-arabic arabic">لَا تَقْنَطُوا مِن رَّحْمَةِ اللَّهِ</span>
+        <div class="guidance-english">Do not despair of the mercy of Allah.</div>
+        <div class="guidance-ref">Surah Az-Zumar, 39:53</div>
+        <div class="guidance-divider"></div>
+      </div>
+
+      <div class="guidance-card reveal">
+        <div class="guidance-type">Hadith · Sahih al-Bukhari</div>
+        <div class="guidance-english" style="font-size:1rem;font-family:'Instrument Serif',serif;font-style:italic;color:var(--text);margin-bottom:0.5rem;">"The best among you are those who have the best character."</div>
+        <div class="guidance-ref">Sahih al-Bukhari</div>
+        <div class="guidance-divider"></div>
+      </div>
+
+      <div class="guidance-card reveal" style="grid-column: 1 / -1; max-width: 680px; margin: 0 auto; width: 100%;">
+        <div class="guidance-type">Hadith · Sahih al-Bukhari &amp; Sahih Muslim</div>
+        <div class="guidance-english" style="font-size:1rem;font-family:'Instrument Serif',serif;font-style:italic;color:var(--text);margin-bottom:0.5rem;">"Allah is gentle and loves gentleness in all matters."</div>
+        <div class="guidance-ref">Sahih al-Bukhari &amp; Sahih Muslim</div>
+        <div class="guidance-divider"></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+
+<div class="divider"></div>
+
+<!-- Featured Project -->
+<section id="featured-project">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label">Featured Work</span>
+      <h2 class="section-title">A project I built.</h2>
+      <p class="section-subtitle">Turning learning into something real and live on the internet.</p>
+    </div>
+
+    <div class="featured-card reveal">
+      <span class="featured-badge">Featured</span>
+      <div class="featured-visual">
+        <div class="featured-visual-text">MIDWAY</div>
+      </div>
+      <div class="featured-body">
+        <div class="featured-cat">Web Development · Live Project</div>
+        <h3 class="featured-title">Midway English Icon</h3>
+        <p class="featured-desc">An English learning platform designed to improve vocabulary, grammar, pronunciation, communication, and confidence through a modern, responsive, and user-friendly interface.</p>
+        <div class="featured-tech">
+          <span class="badge">HTML</span>
+          <span class="badge">CSS</span>
+          <span class="badge">JavaScript</span>
+          <span class="badge">Responsive Design</span>
+        </div>
+        <a href="https://midwayengicon.vercel.app" target="_blank" rel="noopener" class="featured-link">
+          Visit Website <span class="featured-link-icon">↗</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- Stats -->
+<section id="stats">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-item reveal">
+        <span class="stat-num"><span class="counter" data-target="1">0</span><span class="stat-accent"></span></span>
+        <span class="stat-label">Live project shipped</span>
+      </div>
+      <div class="stat-item reveal">
+        <span class="stat-num"><span class="counter" data-target="6">0</span><span class="stat-accent">+</span></span>
+        <span class="stat-label">Skills being built</span>
+      </div>
+      <div class="stat-item reveal">
+        <span class="stat-num"><span class="counter" data-target="2025">0</span><span class="stat-accent"></span></span>
+        <span class="stat-label">Year I started</span>
+      </div>
+      <div class="stat-item reveal">
+        <span class="stat-num"><span class="counter" data-target="100">0</span><span class="stat-accent">%</span></span>
+        <span class="stat-label">Curiosity in every line</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- Quotes -->
+<section id="quotes">
+  <div class="container">
+    <div class="section-header reveal" style="text-align:center; margin-bottom: 3rem;">
+      <span class="section-label" style="display:block; text-align:center;">Words That Matter</span>
+      <h2 class="section-title" style="text-align:center;">On craft &amp; curiosity.</h2>
+    </div>
+    <div class="quote-display reveal">
+      <span class="quote-mark">"</span>
+      <p class="quote-text" id="quote-text">Simplicity is the ultimate sophistication.</p>
+      <div class="quote-nav">
+        <button class="quote-btn" id="prev-quote">←</button>
+        <div id="quote-dots"></div>
+        <button class="quote-btn" id="next-quote">→</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- Skills -->
+<section id="skills">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label">Skills</span>
+      <h2 class="section-title">Domains I work in.</h2>
+      <p class="section-subtitle">Not a checklist of tools. A set of disciplines I've invested deeply in.</p>
+    </div>
+
+    <div class="skills-grid reveal">
+      <div class="skill-card">
+        <span class="skill-icon">⬡</span>
+        <div class="skill-name">HTML</div>
+        <div class="skill-desc">Writing clean, semantic markup that forms the solid foundation every great interface is built on.</div>
+        <div class="skill-tags">
+          <span class="tag">Semantic HTML5</span><span class="tag">Accessibility</span><span class="tag">SEO structure</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <span class="skill-icon">✦</span>
+        <div class="skill-name">CSS</div>
+        <div class="skill-desc">Crafting visual experiences through layouts, transitions, and design details that feel intentional.</div>
+        <div class="skill-tags">
+          <span class="tag">Flexbox</span><span class="tag">Grid</span><span class="tag">Animations</span><span class="tag">Custom properties</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <span class="skill-icon">◎</span>
+        <div class="skill-name">JavaScript</div>
+        <div class="skill-desc">Bringing pages to life with interactivity, logic, and the kind of behaviour users actually feel.</div>
+        <div class="skill-tags">
+          <span class="tag">ES6+</span><span class="tag">DOM manipulation</span><span class="tag">Events</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <span class="skill-icon">◐</span>
+        <div class="skill-name">Responsive Web Design</div>
+        <div class="skill-desc">Building interfaces that look and feel right on every screen — from a phone in a pocket to a wide monitor.</div>
+        <div class="skill-tags">
+          <span class="tag">Mobile-first</span><span class="tag">Media queries</span><span class="tag">Fluid layouts</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <span class="skill-icon">◇</span>
+        <div class="skill-name">Git &amp; GitHub</div>
+        <div class="skill-desc">Tracking work, committing with intention, and building a public record of learning one push at a time.</div>
+        <div class="skill-tags">
+          <span class="tag">Version control</span><span class="tag">Branching</span><span class="tag">Open source</span>
+        </div>
+      </div>
+      <div class="skill-card" style="border: 1px solid rgba(139,0,0,0.25); position:relative;">
+        <span style="position:absolute;top:1rem;right:1rem;font-size:0.6rem;letter-spacing:0.12em;color:var(--accent);text-transform:uppercase;border:1px solid rgba(139,0,0,0.3);padding:0.2rem 0.5rem;border-radius:2px;">Learning</span>
+        <span class="skill-icon">⊕</span>
+        <div class="skill-name">React</div>
+        <div class="skill-desc">Currently learning component-based thinking, state management, and the modern frontend ecosystem.</div>
+        <div class="skill-tags">
+          <span class="tag">Components</span><span class="tag">JSX</span><span class="tag">useState</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- Projects -->
+<section id="projects">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label">Projects</span>
+      <h2 class="section-title">Work I'm proud of.</h2>
+      <p class="section-subtitle">Real things I've built. More coming as I keep learning and shipping.</p>
+    </div>
+
+    <div class="projects-grid" id="projects-grid" style="margin-top: 3rem;">
+
+      <div class="project-card reveal" data-category="web">
+        <div class="project-thumb" style="background: linear-gradient(135deg, #0f0f0f 0%, #1a0a0a 100%);">
+          <div class="project-thumb-inner" style="font-size:1.8rem;opacity:0.2;letter-spacing:0.05em;">MIDWAY</div>
+          <div class="project-overlay">
+            <a href="https://midwayengicon.vercel.app" target="_blank" rel="noopener" class="overlay-btn">Live →</a>
+          </div>
+        </div>
+        <div class="project-body">
+          <div class="project-cat">Web Development · First Project</div>
+          <div class="project-title">Midway Engicon</div>
+          <div class="project-desc">My first web development project. A responsive website built with a clean modern interface — where I learned to translate a design vision into a real, deployed product.</div>
+          <div class="tech-badges">
+            <span class="badge">HTML</span><span class="badge">CSS</span><span class="badge">JavaScript</span><span class="badge">Responsive</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card reveal" data-category="web" style="border: 1px dashed rgba(255,255,255,0.08); opacity: 0.5; pointer-events: none;">
+        <div class="project-thumb" style="background: var(--secondary);">
+          <div class="project-thumb-inner" style="font-size:1rem; opacity:0.2; letter-spacing:0.15em;">NEXT PROJECT</div>
+        </div>
+        <div class="project-body">
+          <div class="project-cat" style="color: var(--muted);">Coming Soon</div>
+          <div class="project-title" style="color: var(--muted);">Something is being built.</div>
+          <div class="project-desc">Every great portfolio grows over time. This space is reserved for the next thing I ship.</div>
+          <div class="tech-badges">
+            <span class="badge" style="opacity:0.4;">React</span><span class="badge" style="opacity:0.4;">JavaScript</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- Timeline -->
+<section id="timeline">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label">Journey</span>
+      <h2 class="section-title">How I got here.</h2>
+      <p class="section-subtitle">A timeline of learning, building, and becoming.</p>
+    </div>
+
+    <div class="timeline-track">
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">2025 — Now</div>
+        <div class="timeline-heading">Learning React</div>
+        <div class="timeline-sub">Modern Frontend Development</div>
+        <div class="timeline-desc">Diving into the component-based world of React — learning how modern interfaces are structured, state works, and how to think in reusable pieces. The journey is just beginning.</div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">2025</div>
+        <div class="timeline-heading">First Deployed Website</div>
+        <div class="timeline-sub">Midway Engicon · Live on Vercel</div>
+        <div class="timeline-desc">Took everything learned about HTML, CSS, and JavaScript and built something real — a responsive website now live on the internet. The gap between writing code and shipping a product is enormous. Crossing it changed everything.</div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">2025</div>
+        <div class="timeline-heading">JavaScript Fundamentals</div>
+        <div class="timeline-sub">Making Things Interactive</div>
+        <div class="timeline-desc">Learned the language of the browser — events, DOM manipulation, functions, and the logic that makes a page respond. Realised that behaviour is what separates a design from a product.</div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">2025</div>
+        <div class="timeline-heading">Started Learning HTML &amp; CSS</div>
+        <div class="timeline-sub">Dhanbad, India · Where it began</div>
+        <div class="timeline-desc">Opened a blank file, typed the first tag, and watched something appear in a browser window. It was a small moment that felt enormous. Curiosity immediately turned into obsession.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- Journal -->
+<section id="journal">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label">Journal</span>
+      <h2 class="section-title">Thoughts on craft.</h2>
+      <p class="section-subtitle">Writing as a tool for thinking. Not a content strategy.</p>
+    </div>
+
+    <div class="journal-grid">
+
+      <div class="journal-card reveal">
+        <div class="journal-meta">
+          <span class="journal-cat">Design</span>
+          <span class="journal-read">· 4 min read</span>
+        </div>
+        <div class="journal-title">Why Beautiful Software Is an Ethical Choice</div>
+        <div class="journal-excerpt">We spend hours inside the products we build. The quality of those surfaces isn't aesthetic vanity — it's respect for human attention and time.</div>
+        <div class="journal-date">June 2025</div>
+      </div>
+
+      <div class="journal-card reveal">
+        <div class="journal-meta">
+          <span class="journal-cat">Engineering</span>
+          <span class="journal-read">· 6 min read</span>
+        </div>
+        <div class="journal-title">The Hidden Cost of Complexity</div>
+        <div class="journal-excerpt">Every abstraction has a tax. Every dependency is a contract. The most reliable codebases I've seen are shamelessly boring in their simplicity.</div>
+        <div class="journal-date">April 2025</div>
+      </div>
+
+      <div class="journal-card reveal">
+        <div class="journal-meta">
+          <span class="journal-cat">Learning</span>
+          <span class="journal-read">· 3 min read</span>
+        </div>
+        <div class="journal-title">Curiosity Compounds Faster Than Talent</div>
+        <div class="journal-excerpt">Talent gets you to a ceiling faster. Curiosity keeps pushing the ceiling upward. The most interesting engineers I've met are relentlessly curious, not prodigies.</div>
+        <div class="journal-date">February 2025</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div>
+        <div class="footer-name" style="font-size:1.5rem;letter-spacing:0.04em;">SIA — Ishan Ali</div>
+        <div class="footer-tagline" style="margin-bottom:0.2rem;">Frontend Developer</div>
+        <div style="font-size:0.78rem;color:var(--muted);margin-bottom:0.4rem;">@ishanalisia</div>
+        <div class="footer-tagline">Designed &amp; Developed by Ishan Ali</div>
+      </div>
+      <div class="footer-copy">
+        <div style="color: var(--muted); font-size: 0.72rem; margin-bottom: 0.3rem;">© 2025</div>
+        <div style="color: var(--muted); font-size: 0.7rem;">Dhanbad, India</div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Contact Button -->
+<button id="contact-btn" aria-label="Contact" data-tooltip="Say hello">✉</button>
+
+<!-- Back to Top -->
+<button id="back-top" aria-label="Back to top">↑</button>
+
+<!-- Contact Modal -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="contact-modal">
+    <div class="modal-title">Let's connect.</div>
+    <div class="modal-sub">Find me across the internet @ishanalisia</div>
+    <div class="social-links">
+      <a href="https://t.me/ishanalisia" target="_blank" rel="noopener" class="social-link">
+        <span class="social-icon">✈</span>
+        Telegram
+        <span style="margin-left:auto; font-size: 0.72rem; color: var(--muted);">@ishanalisia</span>
+      </a>
+      <a href="https://instagram.com/ishanalisia" target="_blank" rel="noopener" class="social-link">
+        <span class="social-icon">◈</span>
+        Instagram
+        <span style="margin-left:auto; font-size: 0.72rem; color: var(--muted);">@ishanalisia</span>
+      </a>
+      <a href="https://x.com/ishanalisia" target="_blank" rel="noopener" class="social-link">
+        <span class="social-icon">✕</span>
+        X / Twitter
+        <span style="margin-left:auto; font-size: 0.72rem; color: var(--muted);">@ishanalisia</span>
+      </a>
+      <button class="social-link" id="copy-username" style="background:none; border: 1px solid var(--border); width:100%; text-align:left;">
+        <span class="social-icon">⊕</span>
+        Copy Username
+        <span style="margin-left:auto; font-size: 0.72rem; color: var(--muted);">@ishanalisia</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Command Palette -->
+<div class="cmd-overlay" id="cmd-overlay">
+  <div class="cmd-box">
+    <input class="cmd-input" id="cmd-input" placeholder="Search or navigate..." autocomplete="off" spellcheck="false">
+    <div class="cmd-items" id="cmd-items"></div>
+    <div class="cmd-footer">
+      <span>↑↓ navigate</span>
+      <span>↵ select</span>
+      <span>esc close</span>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─── LOADER ───
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.getElementById('loader').classList.add('hidden');
+    document.body.classList.remove('loading');
+  }, 3000);
+});
+
+// ─── CURSOR ───
+const cursor = document.getElementById('cursor');
+const cursorRing = document.getElementById('cursor-ring');
+const glow = document.getElementById('glow');
+let mouseX = 0, mouseY = 0;
+let ringX = 0, ringY = 0;
+
+document.addEventListener('mousemove', e => {
+  mouseX = e.clientX; mouseY = e.clientY;
+  cursor.style.left = mouseX + 'px';
+  cursor.style.top = mouseY + 'px';
+  glow.style.left = mouseX + 'px';
+  glow.style.top = mouseY + 'px';
+});
+
+function animateCursorRing() {
+  ringX += (mouseX - ringX) * 0.12;
+  ringY += (mouseY - ringY) * 0.12;
+  cursorRing.style.left = ringX + 'px';
+  cursorRing.style.top = ringY + 'px';
+  requestAnimationFrame(animateCursorRing);
+}
+animateCursorRing();
+
+document.querySelectorAll('a, button, [role="button"], .project-card, .journal-card').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    cursor.style.width = '16px'; cursor.style.height = '16px';
+    cursorRing.style.width = '50px'; cursorRing.style.height = '50px';
+    cursorRing.style.borderColor = 'rgba(139,0,0,0.7)';
+  });
+  el.addEventListener('mouseleave', () => {
+    cursor.style.width = '10px'; cursor.style.height = '10px';
+    cursorRing.style.width = '38px'; cursorRing.style.height = '38px';
+    cursorRing.style.borderColor = 'rgba(139,0,0,0.5)';
+  });
+});
+
+// ─── SCROLL PROGRESS ───
+const progressBar = document.getElementById('scroll-progress');
+window.addEventListener('scroll', () => {
+  const scrolled = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+  progressBar.style.width = scrolled + '%';
+
+  // Navbar scroll
+  const nav = document.getElementById('navbar');
+  nav.classList.toggle('scrolled', window.scrollY > 60);
+
+  // Back to top
+  document.getElementById('back-top').classList.toggle('visible', window.scrollY > 400);
+
+  // Active nav links
+  document.querySelectorAll('section[id]').forEach(sec => {
+    const top = sec.offsetTop - 100;
+    const bot = top + sec.offsetHeight;
+    const link = document.querySelector(`.nav-links a[href="#${sec.id}"]`);
+    if (link) link.classList.toggle('active', window.scrollY >= top && window.scrollY < bot);
+  });
+});
+
+// ─── REVEAL ON SCROLL ───
+const revealObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.12 });
+
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+// Timeline items
+const timelineObs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.15 });
+document.querySelectorAll('.timeline-item').forEach(el => timelineObs.observe(el));
+
+// ─── COUNTERS ───
+const counterObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const el = e.target;
+      const target = parseInt(el.dataset.target);
+      let current = 0;
+      const step = target / 40;
+      const interval = setInterval(() => {
+        current = Math.min(current + step, target);
+        el.textContent = Math.floor(current);
+        if (current >= target) clearInterval(interval);
+      }, 30);
+      counterObs.unobserve(el);
+    }
+  });
+}, { threshold: 0.5 });
+document.querySelectorAll('.counter').forEach(el => counterObs.observe(el));
+
+// ─── THEME ───
+const themeBtn = document.getElementById('theme-btn');
+themeBtn.addEventListener('click', () => {
+  document.body.classList.toggle('ivory');
+  showToast(document.body.classList.contains('ivory') ? '☀ Ivory theme' : '◑ Dark theme');
+});
+
+// ─── QUOTES ───
+const quotes = [
+  "Simplicity is the ultimate sophistication.",
+  "The details are not the details. They make the design.",
+  "Curiosity compounds faster than talent.",
+  "Build with intention.",
+  "Perfection isn't loud.",
+  "Everything meaningful starts with curiosity."
+];
+
+let qIdx = 0;
+const qText = document.getElementById('quote-text');
+const dotsEl = document.getElementById('quote-dots');
+
+function buildDots() {
+  dotsEl.innerHTML = '';
+  quotes.forEach((_, i) => {
+    const dot = document.createElement('div');
+    dot.className = 'quote-dot' + (i === qIdx ? ' active' : '');
+    dot.addEventListener('click', () => goToQuote(i));
+    dotsEl.appendChild(dot);
+  });
+}
+
+function goToQuote(i) {
+  qText.classList.add('fade');
+  setTimeout(() => {
+    qIdx = i;
+    qText.textContent = quotes[qIdx];
+    qText.classList.remove('fade');
+    buildDots();
+  }, 500);
+}
+
+document.getElementById('next-quote').addEventListener('click', () => goToQuote((qIdx + 1) % quotes.length));
+document.getElementById('prev-quote').addEventListener('click', () => goToQuote((qIdx - 1 + quotes.length) % quotes.length));
+buildDots();
+
+setInterval(() => goToQuote((qIdx + 1) % quotes.length), 5000);
+
+// ─── CONTACT MODAL ───
+const contactBtn = document.getElementById('contact-btn');
+const modalOverlay = document.getElementById('modal-overlay');
+contactBtn.addEventListener('click', () => modalOverlay.classList.toggle('open'));
+modalOverlay.addEventListener('click', e => { if (e.target === modalOverlay) modalOverlay.classList.remove('open'); });
+
+document.getElementById('copy-username').addEventListener('click', () => {
+  navigator.clipboard.writeText('@ishanalisia').then(() => {
+    showToast('✓ Copied @ishanalisia to clipboard');
+  });
+});
+
+// ─── BACK TO TOP ───
+document.getElementById('back-top').addEventListener('click', () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+// ─── HAMBURGER ───
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobile-menu');
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('open');
+  mobileMenu.classList.toggle('open');
+});
+document.querySelectorAll('.mobile-link').forEach(a => {
+  a.addEventListener('click', () => {
+    hamburger.classList.remove('open');
+    mobileMenu.classList.remove('open');
+  });
+});
+
+// ─── COMMAND PALETTE ───
+const cmdOverlay = document.getElementById('cmd-overlay');
+const cmdInput = document.getElementById('cmd-input');
+const cmdItems = document.getElementById('cmd-items');
+
+const commands = [
+  { label: 'Go to About', icon: '◎', href: '#about' },
+  { label: 'Go to Skills', icon: '⬡', href: '#skills' },
+  { label: 'Go to Projects', icon: '◈', href: '#projects' },
+  { label: 'Go to Timeline', icon: '◇', href: '#timeline' },
+  { label: 'Go to Journal', icon: '✦', href: '#journal' },
+  { label: 'Go to Guidance', icon: '◆', href: '#guidance' },
+  { label: 'Open Contact', icon: '✉', action: () => modalOverlay.classList.add('open') },
+  { label: 'Toggle Theme', icon: '◑', action: () => { document.body.classList.toggle('ivory'); showToast('Theme changed'); } },
+  { label: 'Back to Top', icon: '↑', action: () => window.scrollTo({ top: 0, behavior: 'smooth' }) },
+  { label: 'Visit @ishanalisia on X', icon: '✕', href: 'https://x.com/ishanalisia', ext: true },
+];
+
+let cmdActive = 0;
+
+function renderCmd(q) {
+  const filtered = commands.filter(c => c.label.toLowerCase().includes(q.toLowerCase()));
+  cmdItems.innerHTML = filtered.map((c, i) => `
+    <div class="cmd-item${i === 0 ? ' active' : ''}" data-idx="${i}">
+      <span class="cmd-item-icon">${c.icon}</span>
+      ${c.label}
+      ${c.ext ? '<span class="cmd-hint">↗</span>' : '<span class="cmd-hint">↵</span>'}
+    </div>
+  `).join('');
+
+  cmdItems.querySelectorAll('.cmd-item').forEach((el, i) => {
+    el.addEventListener('click', () => runCommand(filtered[i]));
+  });
+}
+
+function runCommand(cmd) {
+  closePalette();
+  if (cmd.href) {
+    if (cmd.ext) window.open(cmd.href, '_blank');
+    else { const el = document.querySelector(cmd.href); if (el) el.scrollIntoView({ behavior: 'smooth' }); }
+  }
+  if (cmd.action) setTimeout(cmd.action, 100);
+}
+
+function closePalette() { cmdOverlay.classList.remove('open'); cmdInput.value = ''; renderCmd(''); }
+
+document.getElementById('cmd-btn').addEventListener('click', () => {
+  cmdOverlay.classList.add('open'); cmdInput.focus(); renderCmd('');
+});
+
+document.addEventListener('keydown', e => {
+  if ((e.ctrlKey || e.metaKey) && e.key === 'k') { e.preventDefault(); cmdOverlay.classList.add('open'); cmdInput.focus(); renderCmd(''); }
+  if (e.key === 'Escape') closePalette();
+});
+
+cmdInput.addEventListener('input', () => renderCmd(cmdInput.value));
+cmdOverlay.addEventListener('click', e => { if (e.target === cmdOverlay) closePalette(); });
+renderCmd('');
+
+// ─── TOAST ───
+function showToast(msg) {
+  const toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2800);
+}
+
+// ─── RIPPLE ───
+document.querySelectorAll('.btn-primary, .btn-ghost').forEach(btn => {
+  btn.addEventListener('click', function(e) {
+    const rect = this.getBoundingClientRect();
+    const r = document.createElement('span');
+    r.className = 'ripple';
+    r.style.left = (e.clientX - rect.left) + 'px';
+    r.style.top = (e.clientY - rect.top) + 'px';
+    r.style.width = r.style.height = Math.max(rect.width, rect.height) + 'px';
+    r.style.marginLeft = r.style.marginTop = -Math.max(rect.width, rect.height) / 2 + 'px';
+    this.appendChild(r);
+    setTimeout(() => r.remove(), 600);
+  });
+});
+
+// ─── KONAMI CODE EASTER EGG ───
+const konami = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
+let konamiIdx = 0;
+document.addEventListener('keydown', e => {
+  if (e.key === konami[konamiIdx]) {
+    konamiIdx++;
+    if (konamiIdx === konami.length) {
+      document.body.classList.add('konami-active');
+      showToast('🎮 Konami Code Activated!');
+      setTimeout(() => document.body.classList.remove('konami-active'), 4000);
+      konamiIdx = 0;
+    }
+  } else {
+    konamiIdx = 0;
+  }
+});
+
+// ─── HERO CANVAS (Subtle Particles) ───
+(function() {
+  const canvas = document.getElementById('hero-canvas');
+  const ctx = canvas.getContext('2d');
+  let w, h, particles;
+
+  function resize() {
+    w = canvas.width = canvas.offsetWidth;
+    h = canvas.height = canvas.offsetHeight;
+  }
+
+  function initParticles() {
+    particles = Array.from({ length: 60 }, () => ({
+      x: Math.random() * w,
+      y: Math.random() * h,
+      r: Math.random() * 1.2 + 0.3,
+      dx: (Math.random() - 0.5) * 0.3,
+      dy: (Math.random() - 0.5) * 0.3,
+      alpha: Math.random() * 0.4 + 0.1
+    }));
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, w, h);
+    particles.forEach(p => {
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(139, 0, 0, ${p.alpha})`;
+      ctx.fill();
+      p.x += p.dx;
+      p.y += p.dy;
+      if (p.x < 0 || p.x > w) p.dx *= -1;
+      if (p.y < 0 || p.y > h) p.dy *= -1;
+    });
+
+    // Draw connecting lines
+    particles.forEach((p, i) => {
+      particles.slice(i + 1).forEach(q => {
+        const d = Math.hypot(p.x - q.x, p.y - q.y);
+        if (d < 100) {
+          ctx.beginPath();
+          ctx.moveTo(p.x, p.y);
+          ctx.lineTo(q.x, q.y);
+          ctx.strokeStyle = `rgba(139, 0, 0, ${0.05 * (1 - d / 100)})`;
+          ctx.lineWidth = 0.5;
+          ctx.stroke();
+        }
+      });
+    });
+    requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize', () => { resize(); initParticles(); });
+  resize();
+  initParticles();
+  draw();
+})();
+
+// ─── TEXT SCRAMBLE (Hero Name) ───
+(function() {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  const el = document.querySelector('.hero-name');
+  const original = el.innerHTML;
+  let iteration = 0;
+  let interval;
+
+  function scramble() {
+    clearInterval(interval);
+    interval = setInterval(() => {
+      el.querySelectorAll(':not(.accent)').forEach(node => {
+        if (node.nodeType === 3) {
+          // text node
+        }
+      });
+      iteration++;
+      if (iteration > 8) clearInterval(interval);
+    }, 80);
+  }
+
+  // Just run once on load after 3s
+  setTimeout(scramble, 3200);
+})();
+
+
+
+// ─── ARABIC PROXIMITY / GOLD CURSOR EFFECT ───
+(function() {
+  const PROX = 120; // px radius to start glowing
+  let nearArabic = false;
+
+  function checkProximity(mx, my) {
+    const els = document.querySelectorAll('.arabic, .guidance-arabic, .masha-allah-arabic');
+    let found = false;
+    els.forEach(el => {
+      const r = el.getBoundingClientRect();
+      const cx = r.left + r.width / 2;
+      const cy = r.top + r.height / 2;
+      const dist = Math.hypot(mx - cx, my - cy);
+      if (dist < PROX) {
+        found = true;
+        el.classList.add('gold-glow');
+      } else {
+        el.classList.remove('gold-glow');
+      }
+    });
+    if (found !== nearArabic) {
+      nearArabic = found;
+      document.body.classList.toggle('near-arabic', found);
+    }
+  }
+
+  document.addEventListener('mousemove', e => checkProximity(e.clientX, e.clientY));
+
+  // Touch: tap on Arabic triggers gold
+  document.querySelectorAll('.arabic, .guidance-arabic, .masha-allah-arabic').forEach(el => {
+    el.addEventListener('touchstart', () => {
+      el.classList.add('touch-active');
+      setTimeout(() => el.classList.remove('touch-active'), 1200);
+    }, { passive: true });
+  });
+})();
+
+// ─── MOBILE: touch cursor ───
+document.addEventListener('touchmove', e => {
+  const t = e.touches[0];
+  cursor.style.left = t.clientX + 'px';
+  cursor.style.top = t.clientY + 'px';
+});
+</script>
+</body>
+</html>
